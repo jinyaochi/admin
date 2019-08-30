@@ -16,3 +16,23 @@ if(!function_exists('get_domain')){
         return strtolower($name).$suffix;
     }
 }
+
+/**
+ *  获取在线编辑器或图片上传目录
+ */
+if(!function_exists('get_upload_base_path')){
+    function get_upload_base_path($guard = 'admin')
+    {
+        $directory = $guard.DIRECTORY_SEPARATOR;
+        if($guard=='admin'){
+            $directory .= auth($guard)->user()['id'].DIRECTORY_SEPARATOR;
+        }
+        if($guard=='tenant'){
+            $directory .= auth($guard)->user()['tenant_id'].DIRECTORY_SEPARATOR;
+        }
+        $directory .= date('Y').DIRECTORY_SEPARATOR.date('m').DIRECTORY_SEPARATOR.date('d').DIRECTORY_SEPARATOR;
+        $realPath = storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.$directory);
+        check_dir($realPath);
+        return $realPath;
+    }
+}

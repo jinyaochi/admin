@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\MiniProgramTrait;
 use App\Http\Traits\ModelQueryExtend;
 use App\Models\Ord\OrdOrder;
 use App\Models\User\UserMessage;
@@ -15,6 +16,7 @@ class User extends Authenticatable implements JWTSubject
 {
 
     use HasRoles,Notifiable,ModelQueryExtend;
+    use MiniProgramTrait;
 
     const USER_STATUS_OPEN = 1;
     const USER_STATUS_STOP = 0;
@@ -25,7 +27,7 @@ class User extends Authenticatable implements JWTSubject
     const USER_TYPE_STAFF = 4;
     const USER_TYPE_MEMBER = 8;
 
-    protected $appends = ['type_name','guard_name'];
+    protected $appends = ['type_name','guard_name','change_code'];
 
     /**
      * The attributes that are mass assignable.
@@ -96,5 +98,23 @@ class User extends Authenticatable implements JWTSubject
      */
     public function message(){
         return $this->hasMany(UserMessage::class,'user_id');
+    }
+
+    /**
+     * 员工太阳码
+     */
+    public function getChangeCodeAttribute()
+    {
+        try{
+            $key = 'member_code_mini_id_'.$this->id;
+            $appid = env('MALL_APPID');
+
+            $scene = 'uid='.$this->id;
+            $url = env('APP_API_URL').$this->getMiniCode($scene, 'pages/index/main',430,$appid);
+
+            return $url;
+        }catch(\Exception $ex){
+            error(__CLASS__ . ' | ' . __FUNCTION__ . ' | ' . $ex->getFile() . ' | ' . $ex->getLine() . ' | error = ' . $ex->getMessage());
+        }
     }
 }

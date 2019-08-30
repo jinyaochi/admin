@@ -27,6 +27,13 @@ Route::post('category', 'IndexController@category');
 Route::post('cate', 'IndexController@cate');
 
 Route::group(['middleware' => ['jwt.auth']], function ($api) {
+
+    //新的
+
+
+
+    //新的
+
     Route::post('logout', 'LoginController@logout');
     Route::post('userinfo', 'LoginController@userinfo');
     Route::post('sign', 'LoginController@sign');
@@ -51,8 +58,4 @@ Route::group(['middleware' => ['jwt.auth']], function ($api) {
     Route::post('comment', 'IndexController@comment');
     Route::post('tozan', 'IndexController@tozan');
     Route::post('userinfomobile', 'IndexController@userinfomobile');
-});
-
-Route::any('conf/video', function (){
-    return request()->all();
 });

@@ -3,18 +3,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use App\Resources\User as UserResource;
-use App\Services\IntegralService;
 use App\Transformers\UserTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class LoginController extends InitController{
-
-    public function __construct(IntegralService $integralService = null)
-    {
-        $this->integralService = $integralService;
-    }
 
     /**
      * Create a new AuthController instance.
@@ -23,13 +17,8 @@ class LoginController extends InitController{
      */
     public function login(Request $request)
     {
-
-//        $appid = 'wxf8d08695c2d862f4'; //填写微信小程序appid
-//        $secret = 'ea09ddae2a1b1bf743766455181f89ae'; //填写微信小程序secret
-
-
-        $appid = 'wx1c7c48b523714138'; //填写微信小程序appid  正式服
-        $secret = '3ae529b648adbe027bda06cec84d061a'; //填写微信小程序secret
+        $appid = env('MALL_APPID'); //填写微信小程序appid  正式服
+        $secret = 'c53b47909a0a814369023db2ff26083f'; //填写微信小程序secret
 
         $code = $request->code ?? '';
 
@@ -44,37 +33,9 @@ class LoginController extends InitController{
         ]);
         $token = \JWTAuth::fromUser($user);
 
-        return $this->respondWithToken($token,$wJson['openid']);
+        return $this->respondWithToken($token,$wJson['openid'],$wJson);
     }
 
-
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        return $this->respondWithToken($this->guard()->refresh());
-    }
-
-    public function sign(){
-        $user = $this->guard()->user();
-        try{
-            DB::beginTransaction();
-
-            $this->integralService->sign($user);
-
-            DB::commit();
-            return $this->success('success',null,[
-                'issign' => 1
-            ]);
-        }catch (\Exception $e) {
-            DB::rollback();
-            return $this->error($e->getMessage());
-        }
-
-    }
 
     /**
      * Get the authenticated User
@@ -114,13 +75,14 @@ class LoginController extends InitController{
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithToken($token,$openid = null)
+    protected function respondWithToken($token,$openid = null,$extra = [])
     {
         return $this->success('success',null,[
             'access_token' => $token,
             'openid' => $openid,
             'token_type' => 'bearer',
-            'expires_in' => $this->guard()->factory()->getTTL() * 60
+            'expires_in' => $this->guard()->factory()->getTTL() * 60,
+            'extra' => $extra
         ]);
     }
 
