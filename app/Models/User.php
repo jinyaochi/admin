@@ -114,7 +114,7 @@ class User extends Authenticatable implements JWTSubject
 
             return $url;
         }catch(\Exception $ex){
-            error(__CLASS__ . ' | ' . __FUNCTION__ . ' | ' . $ex->getFile() . ' | ' . $ex->getLine() . ' | error = ' . $ex->getMessage());
+            info(__CLASS__ . ' | ' . __FUNCTION__ . ' | ' . $ex->getFile() . ' | ' . $ex->getLine() . ' | error = ' . $ex->getMessage());
         }
     }
 }

@@ -197,14 +197,13 @@ trait MiniProgramTrait
             $filePath = get_upload_base_path('mini_'.$appid);
             $response = $this->miniInit(false,$appid)->app_code
                 ->getUnlimit($scene, ['page' => $path, 'width' => $width]);
-            dd($response);
             if($response instanceof \EasyWeChat\Kernel\Http\StreamResponse){
                 return get_upload_url($filePath).$response->save($filePath);
             }
             logger('获取小程序太阳码，微信返回结果$response=',collect($response)->toArray());
-            throw new Exception('获取小程序码失败'.$response['errmsg']);
+            throw new \Exception('获取小程序码失败'.$response['errmsg']);
         }catch(\Exception $ex){
-            throw new Exception($ex->getMessage());
+            throw new \Exception($ex->getMessage());
         }
     }
 
