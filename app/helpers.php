@@ -36,3 +36,17 @@ if(!function_exists('get_upload_base_path')){
         return $realPath;
     }
 }
+
+/**
+ * 检查目录,没有的话创建目录
+ */
+if(!function_exists('check_dir')){
+    function check_dir($dir)
+    {
+        if(!file_exists($dir)){
+            $oldumask = umask(0);
+            mkdir($dir, 0777, true);
+            umask($oldumask);
+        }
+    }
+}

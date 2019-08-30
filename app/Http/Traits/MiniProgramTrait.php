@@ -23,14 +23,8 @@ trait MiniProgramTrait
      */
     public function miniInit($isPayment = false,$appid = null)
     {
-        $program = $this->_getConfig($appid);
-        $config = config('wechat.mini_program.' . $program);
+        $config = config('wechat.mini_program.default');
         $app = Factory::miniProgram($config);
-        if($isPayment){
-            $config = config('wechat.payment.default');
-            $app = Factory::payment($config);
-        }
-
         return $app;
     }
 
@@ -203,6 +197,7 @@ trait MiniProgramTrait
             $filePath = get_upload_base_path('mini_'.$appid);
             $response = $this->miniInit(false,$appid)->app_code
                 ->getUnlimit($scene, ['page' => $path, 'width' => $width]);
+            dd($response);
             if($response instanceof \EasyWeChat\Kernel\Http\StreamResponse){
                 return get_upload_url($filePath).$response->save($filePath);
             }
