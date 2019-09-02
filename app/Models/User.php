@@ -51,7 +51,7 @@ class User extends Authenticatable implements JWTSubject
     public function getTypeNameAttribute(){
         return [
             self::USER_TYPE_ADMIN => '管理员',
-            self::USER_TYPE_TENANT => '租客',
+            self::USER_TYPE_TENANT => '校区',
             self::USER_TYPE_STAFF => '员工',
             self::USER_TYPE_MEMBER => '会员',
         ][$this->type];
