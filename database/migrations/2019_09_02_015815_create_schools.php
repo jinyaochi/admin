@@ -18,12 +18,12 @@ class CreateSchools extends Migration
             $table->integer('user_id')->default(0)->comment('对应的后台登陆账号的ID');
             $table->string('name',100)->default('')->comment('校区名称');
             $table->string('intro',255)->default('')->comment('校区简介');
-            $table->text('images')->default('')->comment('图片集合');
+            $table->text('images')->comment('图片集合');
             $table->string('time_at')->nullable()->comment('营业时间');
             $table->string('address',100)->default('')->comment('校区地址');
             $table->string('address_detail',100)->default('')->comment('校区详细地址');
-            $table->decimal('lat',3,8)->default(0);
-            $table->decimal('lng',3,8)->default(0);
+            $table->decimal('lat',8,8)->default(0);
+            $table->decimal('lng',8,8)->default(0);
             $table->timestamps();
         });
     }
