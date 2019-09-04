@@ -32,6 +32,7 @@ class IndexController extends InitController
     }
 
     public function create(Request $request,School $model = null){
+        dd(json_decode(config('regin')['area'],true));
 
         if($request->isMethod('get')) {
 
