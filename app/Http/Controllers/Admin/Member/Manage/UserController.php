@@ -23,10 +23,6 @@ class UserController extends InitController
 
     public function index(Request $request){
 
-        $user = User::find(1);
-
-        dd($user->change_code);
-
         $name = $request->name ?? '';
         $lists = User::where('type',User::USER_TYPE_MEMBER)->where(function ($query)use($name){
             $name && $query->where('email',$name)->orWhere('nickname','like',"%{$name}%");

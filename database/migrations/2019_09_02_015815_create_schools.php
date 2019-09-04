@@ -24,6 +24,8 @@ class CreateSchools extends Migration
             $table->string('address_detail',100)->default('')->comment('校区详细地址');
             $table->decimal('lat',8,8)->default(0);
             $table->decimal('lng',8,8)->default(0);
+            $table->integer('status')->default(1)->comment('1正常 2停止');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
