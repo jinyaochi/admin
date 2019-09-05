@@ -22,6 +22,9 @@ class CreateSchools extends Migration
             $table->string('time_at')->nullable()->comment('营业时间');
             $table->string('address',100)->default('')->comment('校区地址');
             $table->string('address_detail',100)->default('')->comment('校区详细地址');
+            $table->string('province',10)->default('');
+            $table->string('city',10)->default('');
+            $table->string('region',10)->default('');
             $table->decimal('lat',8,8)->default(0);
             $table->decimal('lng',8,8)->default(0);
             $table->integer('status')->default(1)->comment('1正常 2停止');
