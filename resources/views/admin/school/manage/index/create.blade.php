@@ -4,9 +4,9 @@
     <div class="content_ch">
         <div class="admin_info clearfix">
             <ul class="nav_pills clearfix">
-                <a href="{{ url('product/manage/goods') }}"><li>课程管理</li></a>
+                <a href="{{ url('school/manage/index') }}"><li>校区管理</li></a>
                 <li class="selected">
-                    创建/编辑课程
+                    创建/编辑校区
                 </li>
             </ul>
             <div class="mainbox">
@@ -83,15 +83,37 @@
                     <div class="form-group">
                         <label class="col-xs-2 t_r"><span class="text-danger">*</span> 所在地区：</label>
                         <div class="col-xs-8">
-                            <select name="data[province]" class="province" data-id="" >
-                                <option selected>北京</option>
+                            <select name="data[province]" id="province" data-next="city" data-href="/school/manage/index/area" class="province">
+                                <option value="">--请选择--</option>
+                                @if(count($area))
+                                    @foreach($area as $kl=>$gv)
+                                        <option @if($gv['code'] == $model['province']) selected @endif value="{{$gv['code'] ?? ''}}">
+                                            {{$gv['name'] ?? ''}}
+                                        </option>
+                                    @endforeach
+                                @endif
                             </select>
-                            <select name="data[city]" class="city" data-id="" id="regionText">
-                                <option selected>北京市</option>
+                            <select name="data[city]" id="city" data-next="region" data-href="/school/manage/index/area" class="city">
+                                <option value="">--请选择--</option>
+                                @if($model['province'])
+                                    @foreach($area[$model['province']]['son'] as $kl=>$gv)
+                                        <option @if($gv['code'] == $model['city']) selected @endif value="{{$gv['code'] ?? ''}}">
+                                            {{$gv['name'] ?? ''}}
+                                        </option>
+                                    @endforeach
+                                @endif
                             </select>
-                            <select name="data[district]" class="district" data-id="">
-                                <option selected>东城区</option>
+                            <select name="data[region]" id="region" data-href="/school/manage/index/area" class="district">
+                                <option value="">--请选择--</option>
+                                @if($model['city'])
+                                    @foreach($area[$model['province']]['son'][$model['city']]['son'] as $kl=>$gv)
+                                        <option @if($gv['code'] == $model['region']) selected @endif value="{{$gv['code'] ?? ''}}">
+                                            {{$gv['name'] ?? ''}}
+                                        </option>
+                                    @endforeach
+                                @endif
                             </select>
+
                             <p><small>所在地区将直接影响购买者在选择线下自提时的地区筛选，因此请如实认真选择全部地区级。</small></p>
                         </div>
                     </div>
@@ -110,20 +132,17 @@
                                     <input type="button" value="标记新地址" title="搜不到部门地址时，可点击标记新部门，拖动地图标记地址" class="btn btn-info"  id = "changeSearchType">
                                 </div>
                             </div>
-                            <div>
-                                <div id="infoDiv" class="col-xs-3" hidden>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-xs-2 t_r"><span class="text-danger">*</span> 详细地址：</label>
-                        <div class="col-xs-10">
+                        <div class="col-xs-6">
                             <div id="container" class="mt10 col-xs-8" style="height:350px;width:550px;">
                                 <!--地图-->
                             </div>
                         </div>
+                        <div id="infoDiv" class="col-xs-4" hidden="" style=""></div>
                     </div>
 
                     {{--<div class="form-group">--}}
@@ -162,6 +181,55 @@
             app.bootstrap();
             app.load('core/upload');
             app.load('core/map');
+
+            $('#province').change(function() {
+                var href = $(this).data('href');
+                var next = $(this).data('next');
+
+                if (next && href && $(this).val()) {
+                    $.ajax({
+                        url: href,
+                        type: 'POST',
+                        dataType: 'JSON',
+                        async: true,
+                        data: { province: $('#province').val() },
+                        success: function(data) {
+                            $('#' + next).html('<option value="0">--请选择--</option>');
+                            $('#region').html('<option value="0">--请选择--</option>');
+                            for (var i in data) {
+                                $('#' + next).append('<option value="' + data[i].code + '">' + data[i].name + '</option>');
+                            }
+                        },
+                        error: function() {
+
+                        }
+                    });
+                }
+            });
+
+            $('#city').change(function() {
+                var href = $(this).data('href');
+                var next = $(this).data('next');
+
+                if (next && href && $(this).val()) {
+                    $.ajax({
+                        url: href,
+                        type: 'POST',
+                        dataType: 'JSON',
+                        async: true,
+                        data: { province: $('#province').val(), city: $('#city').val() },
+                        success: function(data) {
+                            $('#' + next).html('<option value="0">--请选择--</option>');
+                            for (var i in data) {
+                                $('#' + next).append('<option value="' + data[i].code + '">' + data[i].name + '</option>');
+                            }
+                        },
+                        error: function() {
+
+                        }
+                    });
+                }
+            });
         });
 
     </script>

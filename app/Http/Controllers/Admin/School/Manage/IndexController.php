@@ -32,11 +32,11 @@ class IndexController extends InitController
     }
 
     public function create(Request $request,School $model = null){
-        dd(json_decode(config('regin')['area'],true));
 
         if($request->isMethod('get')) {
+            $area = json_decode(config('regin')['area'],true);
 
-            return view($this->template . __FUNCTION__, compact('model'));
+            return view($this->template . __FUNCTION__, compact('model','area'));
         }
 
         $data = $request->data;
@@ -79,5 +79,20 @@ class IndexController extends InitController
         }catch (\Exception $e) {
             return $this->error('操作异常，请联系开发人员'.$e->getMessage());
         }
+    }
+
+    public function area(Request $request){
+
+        $province = $request->province ?? '';
+        $city = $request->city ?? '';
+
+        $area = json_decode(config('regin.area'),true);
+
+        if($city){
+            return $area[$province]['son'][$city]['son'];
+        }else{
+            return $area[$province]['son'];
+        }
+
     }
 }

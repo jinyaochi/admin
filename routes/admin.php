@@ -89,6 +89,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
             Route::group(['prefix' => 'manage', 'as' => 'manage.', 'namespace' => 'Manage'], function(){
                 Route::get('index', ['as' => 'index', 'uses' => 'IndexController@index']);
                 Route::get('index/create/{model?}', ['as' => 'index.create', 'uses' => 'IndexController@create']);
+                Route::any('index/area', ['as' => 'index.area', 'uses' => 'IndexController@area']);
             });
 
         });

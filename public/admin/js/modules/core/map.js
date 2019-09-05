@@ -40,7 +40,7 @@ define(function(require, exports, module) {
                 //检索成功的回调函数
                 complete: function(results) {
                     if (!results.detail.pois) {
-                        document.getElementById('#infoDiv').hide();
+                        $('#infoDiv').hide();
                         message.error('搜索结果为空，请选择标记新地址');
                         return
                     }
@@ -74,7 +74,7 @@ define(function(require, exports, module) {
             }
             $('#infoDiv').show();
             $('#centerPoint').hide();
-            var regionText = $("#regionText option:selected").text().trim();
+            var regionText = $("#city option:selected").text().trim();
             searchService.setLocation(regionText);
             searchService.search(poiText);
             searchService.setPageCapacity(4);
