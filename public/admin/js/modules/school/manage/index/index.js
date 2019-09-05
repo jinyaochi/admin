@@ -7,6 +7,28 @@ define(function(require, exports, module) {
     });
     var t = function(e,i) {
 
+        $('#seachuser2').click(function () {
+            $.ajax({
+                url: '/school/manage/index/user/search',
+                type: 'POST',
+                dataType: 'JSON',
+                async: true,
+                data: { mobile: $('#searchinput').val() ,type:'worker'},
+                success: function(data) {
+                    if(!data.status){
+                        $('#searchinput').val('')
+                        $('#adminid').val('')
+                        return message.error(data.info)
+                    }
+                    $('#adminid').val(data.data.id)
+                    message.success('当前账号可用');
+                },
+                error: function() {
+
+                }
+            });
+        });
+
         $('#seachuser').click(function () {
             $.ajax({
                 url: '/school/manage/index/user/search',
@@ -17,7 +39,7 @@ define(function(require, exports, module) {
                 success: function(data) {
                     if(!data.status){
                         $('#searchinput').val('')
-                        $('#adminid').val(0)
+                        $('#adminid').val('')
                         return message.error(data.info)
                     }
                     $('#adminid').val(data.data.id)

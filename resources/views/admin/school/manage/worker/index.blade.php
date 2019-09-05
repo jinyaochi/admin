@@ -10,17 +10,18 @@
         <div class="admin_info clearfix">
             <!--right bengin-->
             <ul class="nav_pills mb10 clearfix">
-                <a href="{{ url('school/manage/index') }}"><li class="selected">校区列表</li></a>
+                <a href="{{ url('school/manage/index') }}"><li>校区管理</li></a>
+                <a href="{{ url('school/manage/worker/'.$model['id']) }}"><li class="selected">业务员列表</li></a>
             </ul>
             <div class="mainbox">
                 <div class="form-horizontal goods_nav_search clearfix">
                     <form method="get" name="search">
                         <div class="fl ml10 mr20 pos_rel">
-                            <input type="text" name="name" placeholder="校区名称" class="form-control w260" value="{{request('name')}}">
+                            <input type="text" name="name" placeholder="姓名/手机号" class="form-control w260" value="{{request('name')}}">
                         </div>
                         <input type="submit" value="搜索" class="fl btn ml10 js_submit">
                     </form>
-                    <a class="btn btn_r" href="{{ url('school/manage/index/create') }}">+ 添加校区</a>
+                    <a class="btn btn_r" href="{{ url('school/manage/worker/'.$model['id'].'/create') }}">+ 添加业务员</a>
                 </div>
                 <!--tab 切换1 bengin-->
                 <div class="form-horizontal goods_nav_search clearfix">
@@ -30,9 +31,12 @@
                             <thead>
                             <tr>
                                 <th  style="width: 8%">ID</th>
-                                <th  style="width: 30%">校区名称</th>
-                                <th  >地址</th>
-                                <th  style="width: 15%">操作</th>
+                                <th  style="width: 5%">姓名</th>
+                                <th  style="width: 10%">手机号</th>
+                                <th  style="width: 12%">校区</th>
+                                <th  style="width: 15%">昵称</th>
+                                <th  style="width: 15%">头像</th>
+                                <th  style="width: 10%">邀请码</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -40,16 +44,12 @@
                                 <tr>
                                     <td>{{$lv['id'] ?? ' -- '}}</td>
                                     <td>{{$lv['name'] ?? ''}}</td>
-                                    <td>{{$lv['location'] ?? ' -- '}}</td>
+                                    <td>{{$lv['mobile'] ?? ' -- '}}</td>
+                                    <td>{{$lv->school->name ?? ''}}</td>
+                                    <td>{{$lv['nickname'] ?? ' -- '}}</td>
+                                    <td>@if($lv['avatar'])<img src="{{$lv['avatar'] ?? ' -- '}}" style="width: 50px; height: 50px;" />@endif</td>
                                     <td>
-                                        <a href="{!! url('school/manage/worker',['user'=>$lv['id']]) !!}">业务人员</a>
-                                        @if($lv['status'] == \App\Models\School::SCHOOL_STATUS_OPEN)
-                                            <a class="do_action" data-confirm="确定要关闭吗？" data-url="{!! url('school/manage/index/change/close',['user'=>$lv['id']]) !!}">关闭</a>
-                                        @else
-                                            <a class="do_action red" data-confirm="确定要开启吗？" data-url="{!! url('school/manage/index/change/open',['user'=>$lv['id']]) !!}">开启</a>
-                                        @endif
-                                        <a href="{!! url('school/manage/index/create',['user'=>$lv['id']]) !!}">编辑</a>
-                                        <a class="do_action" data-confirm="确定要删除吗？" data-url="{!! url('school/manage/index/change/remove',['user'=>$lv['id']]) !!}">删除</a>
+                                        <a class="do_action" data-confirm="确定要删除吗？" data-url="{!! url('member/manage/user/remove',['user'=>$lv['id']]) !!}">删除</a>
                                     </td>
                                 </tr>
                             @empty

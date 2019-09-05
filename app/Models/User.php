@@ -98,4 +98,11 @@ class User extends Authenticatable implements JWTSubject
             info(__CLASS__ . ' | ' . __FUNCTION__ . ' | ' . $ex->getFile() . ' | ' . $ex->getLine() . ' | error = ' . $ex->getMessage());
         }
     }
+
+    /**
+     * 校区
+     */
+    public function school(){
+        return $this->belongsTo(School::class,'schoole_id');
+    }
 }

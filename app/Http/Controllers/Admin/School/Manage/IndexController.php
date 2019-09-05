@@ -145,6 +145,8 @@ class IndexController extends InitController
     public function search(Request $request){
         $mobile = $request->mobile ?? '';
 
+        $type = $request->type ?? '';
+
         if(!$mobile){
             return $this->error('手机号为空', null, true);
         }
@@ -153,6 +155,13 @@ class IndexController extends InitController
 
         if(!$user){
             return $this->error('当前手机号未注册', null, true);
+        }
+
+        if($type == 'worker'){
+            //验证是否已经是业务员
+            if($user['type'] & User::USER_TYPE_STAFF){
+                return $this->error('已经是业务员了', null, true);
+            }
         }
 
         return $this->success('操作成功',null,$user);
