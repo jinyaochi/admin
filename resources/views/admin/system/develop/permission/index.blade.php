@@ -38,7 +38,7 @@
                                 <tr>
                                     <td>|{{str_repeat(' -- ',$lv['level']) }}{{$lv->display_name  ?? "--"}}</td>
                                     <td>{{$lv->name ?? ''}}</td>
-                                    <td>{{$lv->guard_name ?? ' -- '}}</td>
+                                    <td></td>
                                     <td>{{$lv->is_menu == 1? '是':'否'}}</td>
                                     <td>{{$lv->status == 1 ? '正常':'停止'}}</td>
                                     <td>{{$lv->sorts ?? 0}}</td>

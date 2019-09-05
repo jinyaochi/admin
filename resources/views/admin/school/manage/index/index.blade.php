@@ -16,7 +16,7 @@
                 <div class="form-horizontal goods_nav_search clearfix">
                     <form method="get" name="search">
                         <div class="fl ml10 mr20 pos_rel">
-                            <input type="text" name="name" placeholder="昵称/手机号" class="form-control w260" value="{{request('name')}}">
+                            <input type="text" name="name" placeholder="校区名称" class="form-control w260" value="{{request('name')}}">
                         </div>
                         <input type="submit" value="搜索" class="fl btn ml10 js_submit">
                     </form>
@@ -32,22 +32,24 @@
                                 <th  style="width: 8%">ID</th>
                                 <th  style="width: 30%">校区名称</th>
                                 <th  >地址</th>
-                                <th  style="width: 10%">操作</th>
+                                <th  style="width: 15%">操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($lists as $lv)
                                 <tr>
                                     <td>{{$lv['id'] ?? ' -- '}}</td>
-                                    <td>{{$lv['status'] == 1 ? '正常' : '禁用'}}</td>
-                                    <td>{{$lv['nickname'] ?? ' -- '}}</td>
+                                    <td>{{$lv['name'] ?? ''}}</td>
+                                    <td>{{$lv['location'] ?? ' -- '}}</td>
                                     <td>
-                                        @if($lv['status'] != \App\Models\School::SCHOOL_STATUS_OPEN)
-                                            <a class="do_action" data-confirm="确定要冻结吗？" data-url="{!! url('member/manage/user/close',['user'=>$lv['id']]) !!}">冻结</a>
+                                        <a href="{!! url('school/manage/index/create',['user'=>$lv['id']]) !!}">业务人员</a>
+                                        @if($lv['status'] == \App\Models\School::SCHOOL_STATUS_OPEN)
+                                            <a class="do_action" data-confirm="确定要关闭吗？" data-url="{!! url('school/manage/index/change/close',['user'=>$lv['id']]) !!}">关闭</a>
                                         @else
-                                            <a class="do_action red" data-confirm="确定要解冻吗？" data-url="{!! url('member/manage/user/open',['user'=>$lv['id']]) !!}">解冻</a>
+                                            <a class="do_action red" data-confirm="确定要开启吗？" data-url="{!! url('school/manage/index/change/open',['user'=>$lv['id']]) !!}">开启</a>
                                         @endif
-                                        <a class="do_action" data-confirm="确定要删除吗？" data-url="{!! url('member/manage/user/remove',['user'=>$lv['id']]) !!}">删除</a>
+                                        <a href="{!! url('school/manage/index/create',['user'=>$lv['id']]) !!}">编辑</a>
+                                        <a class="do_action" data-confirm="确定要删除吗？" data-url="{!! url('school/manage/index/change/remove',['user'=>$lv['id']]) !!}">删除</a>
                                     </td>
                                 </tr>
                             @empty

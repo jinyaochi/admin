@@ -25,7 +25,9 @@ class IndexController extends InitController
     public function index(Request $request){
 
         $name = $request->name ?? '';
-        $lists = School::where('status',School::SCHOOL_STATUS_OPEN)->orderBy('id','DESC')->paginate(self::PAGESIZE);
+        $lists = School::where(function ($query)use($name){
+            $name && $query->where('name','like',"%{$name}%");
+        })->orderBy('id','DESC')->paginate(self::PAGESIZE);
 
         return view( $this->template. __FUNCTION__,compact('lists'));
 
@@ -42,40 +44,70 @@ class IndexController extends InitController
         $data = $request->data;
 
         $rules = [
-            'type' => 'required',
-            'name' => 'required|unique:gds_goods,name,'.($model['id'] ?? 'NULL').',id',
-            'category_id' => 'required',
-            'teacher' => 'required',
-            'timer' => 'required',
-            'price' => 'required',
-            'pay' => 'required',
+            'name' => 'required',
+            'intro' => 'required',
+            'time_at' => 'required',
+            'province' => 'required',
+            'city' => 'required',
+            'region' => 'required',
+            'location' => 'required',
+            'lat' => 'required',
+            'lng' => 'required',
         ];
         $messages = [
-            'type.required' => '请选择分类',
-            'name.required' => '请输入名称',
-            'name.unique' => '名称已存在',
-            'category_id.required' => '请选择分类',
-            'timer.required' => '请填写视频时长',
-            'price.required' => '请输入价格',
-            'pay.required' => '请选择支付方式',
+            'name.required' => '请填写校区名称',
+            'intro.required' => '请填写简介',
+            'time_at.required' => '请填写营业时间',
+            'province.required' => '请选择省',
+            'city.required' => '请选择市',
+            'region.required' => '请选择区',
+            'location.required' => '请填写详细地址',
+            'lat.required' => '缺少经纬度',
+            'lng.required' => '缺少经纬度',
         ];
-
-        if($model){
-            unset($rules['category_id']);
-            unset($rules['type']);
-        }
 
         $validator = Validator::make($data, $rules, $messages);
         if ($validator->fails()) {
             return $this->error($validator->errors()->first(), null, true);
         }
 
+        $admin = $request->admin;
+
+        $rules = [
+            'userid' => 'required',
+            'pwd' => 'required',
+        ];
+        $messages = [
+            'userid.required' => '请验证手机号',
+            'pwd.required' => '请填写密码',
+        ];
+
+        $validator = Validator::make($admin, $rules, $messages);
+        if ($validator->fails()) {
+            return $this->error($validator->errors()->first(), null, true);
+        }
+
         try {
-            $data['intro'] || $data['intro'] = '';
-            $data['timer'] || $data['timer'] = 100;
-            $data['sorts'] || $data['sorts'] = 0;
-            GdsGood::saveBy($data);
-            return $this->success('操作成功',url('product/manage/goods'));
+
+            //管理员逻辑
+            $adminInfo = User::where('id','!=',env('SUPER_ID'))->find($admin['userid']);
+
+            if($adminInfo){
+
+                if(!($adminInfo['type'] & User::USER_TYPE_TENANT)){
+                    $adminInfo->type += User::USER_TYPE_TENANT;
+                }
+
+                $admin['pwd'] != '******' && $adminInfo->password = \Hash::make($admin['pwd']);
+                $adminInfo->save();
+            }
+
+            $data['user_id'] = $admin['userid'];
+
+            //保存校区
+            School::saveBy($data);
+
+            return $this->success('操作成功',url('school/manage/index'));
         }catch (\Exception $e) {
             return $this->error('操作异常，请联系开发人员'.$e->getMessage());
         }
@@ -93,6 +125,37 @@ class IndexController extends InitController
         }else{
             return $area[$province]['son'];
         }
+
+    }
+
+    public function change($type,School $model = null){
+        if($type == 'close'){
+            $model->status = School::SCHOOL_STATUS_STOP;
+            $model->save();
+        }else if($type == 'open'){
+            $model->status = School::SCHOOL_STATUS_OPEN;
+            $model->save();
+        }else{
+            $model->delete();
+        }
+        return $this->success('操作成功');
+
+    }
+
+    public function search(Request $request){
+        $mobile = $request->mobile ?? '';
+
+        if(!$mobile){
+            return $this->error('手机号为空', null, true);
+        }
+
+        $user = User::where('mobile',$mobile)->first();
+
+        if(!$user){
+            return $this->error('当前手机号未注册', null, true);
+        }
+
+        return $this->success('操作成功',null,$user);
 
     }
 }

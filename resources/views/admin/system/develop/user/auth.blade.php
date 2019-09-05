@@ -7,13 +7,13 @@
         <div class="admin_info clearfix">
             <ul class="nav_pills mb10 clearfix">
                 <li><a href="{{url('system/develop/user')}}?type={{\App\Models\User::USER_TYPE_ADMIN}}">管理员</a></li>
-                <li><a href="{{url('system/develop/user')}}?type={{\App\Models\User::USER_TYPE_TENANT}}">租客管理</a></li>
+                <li><a href="{{url('system/develop/user')}}?type={{\App\Models\User::USER_TYPE_TENANT}}">校区管理</a></li>
                 <li><a href="{{url('system/develop/user')}}?type={{\App\Models\User::USER_TYPE_STAFF}}">员工管理</a></li>
-                <li class="selected">{{$model->type_name}}权限设置</li>
+                <li class="selected">权限设置</li>
             </ul>
             <div class="mainbox">
                 <div class="col-xs-2">
-                    <span class="btn btn_white col-xs-12 mt10 mb20 dollyEdit">{{$model->type_name}}:{{$model['name']}}</span>
+                    <span class="btn btn_white col-xs-12 mt10 mb20 dollyEdit">{{$model['name']}}</span>
                     <table class="table table-bordered table-striped">
                         <thead>
                         <tr class="td_center">

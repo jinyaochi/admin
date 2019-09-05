@@ -60,7 +60,7 @@ class LoginController extends InitController
             $request->session()->regenerate();
             return back()->withErrors($message);
         };
-        if(!($user['type'] & User::USER_TYPE_ADMIN)){
+        if(!($user['type'] & (User::USER_TYPE_ADMIN + User::USER_TYPE_TENANT))){
             return $logout(['mobile'=>'该账号不是管理员']);
         }
         if($user['status'] != User::USER_STATUS_OPEN) {
