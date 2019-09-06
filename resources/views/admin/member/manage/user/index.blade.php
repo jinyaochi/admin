@@ -18,6 +18,12 @@
                     <form method="get" name="search">
                         <div class="fl ml10 mr20 pos_rel">
                             <input type="text" name="name" placeholder="昵称/手机号" class="form-control w260" value="{{request('name')}}">
+                            <select name="school">
+                                <option value="">选择校区</option>
+                            </select>
+                            <select name="worker">
+                                <option value="">选择业务员</option>
+                            </select>
                         </div>
                         <input type="submit" value="搜索" class="fl btn ml10 js_submit">
                     </form>
