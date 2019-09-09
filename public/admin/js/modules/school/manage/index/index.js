@@ -110,7 +110,7 @@ define(function(require, exports, module) {
                 success: function(data) {
                     $('#workers').html('<option value="0">选择业务员</option>');
                     for (var i in data.data) {
-                        $('#workers').append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                        $('#workers').append('<option value="' + data.data[i].id + '">' + data.data[i].name + '</option>');
                     }
                 },
                 error: function() {
