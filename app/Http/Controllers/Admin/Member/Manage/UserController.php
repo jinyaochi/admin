@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Admin\Member\Manage;
 
+use App\Models\School;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -24,7 +25,8 @@ class UserController extends InitController
     public function index(Request $request){
 
         $name = $request->name ?? '';
-        $lists = User::where('type',User::USER_TYPE_MEMBER)->where(function ($query)use($name){
+        $schoolid = $request->school ?? '';
+        $lists = User::whereRaw('type & '.User::USER_TYPE_MEMBER)->where(function ($query)use($name){
             $name && $query->where('email',$name)->orWhere('nickname','like',"%{$name}%");
         })->whereIn('status',[User::USER_STATUS_OPEN,User::USER_STATUS_STOP])->orderBy('id','DESC')->paginate(self::PAGESIZE);
 
@@ -35,7 +37,13 @@ class UserController extends InitController
 
             self::export($lists);
         }else{
-            return view( $this->template. __FUNCTION__,compact('lists'));
+            //校区
+            $school = School::all();
+            $worker = $schoolid ? User::where([
+                'status' => User::USER_STATUS_OPEN,
+                'schoole_id' => $schoolid
+            ])->whereRaw('type & '.User::USER_TYPE_STAFF)->get():[];
+            return view( $this->template. __FUNCTION__,compact('lists','school','worker'));
         }
     }
 

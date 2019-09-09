@@ -1284,8 +1284,3 @@ table input[readonly] {
 .choice-sures .ascertain {
   margin-right: 10px;
 }
-@media (min-width: 1300px) {
-  .form-horizontal .c-datepicker-date-editor {
-    width: 67% !important;
-  }
-}

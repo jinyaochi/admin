@@ -17,13 +17,30 @@
                 <div class="form-horizontal goods_nav_search clearfix">
                     <form method="get" name="search">
                         <div class="fl ml10 mr20 pos_rel">
-                            <input type="text" name="name" placeholder="昵称/手机号" class="form-control w260" value="{{request('name')}}">
-                            <select name="school">
-                                <option value="">选择校区</option>
-                            </select>
-                            <select name="worker">
-                                <option value="">选择业务员</option>
-                            </select>
+                            <div class="ml10 mr20 fl">
+                                <input type="text" name="name" placeholder="ID/手机号" class="form-control w260" value="{{request('name')}}">
+                            </div>
+                            <div class="ml10 mr20 fl">
+                                <select name="school">
+                                    <option value="">选择校区</option>
+                                    @foreach($school as $s)
+                                        <option @if($s['id'] == request('school')) selected @endif value="{{$s['id']}}">{{$s['name']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="ml10 mr20 fl">
+                                <select name="worker">
+                                    <option value="">选择业务员</option>
+                                    @foreach($worker as $s)
+                                        <option @if($s['id'] == request('worker')) selected @endif value="{{$s['id']}}">{{$s['name']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="c-datepicker-date-editor J-datepicker-range-day">
+                                <input placeholder="注册时间开始日期" name="start" class="c-datepicker-data-input only-date" value="{{request('start')}}" readonly>
+                                <span class="c-datepicker-range-separator">-</span>
+                                <input placeholder="注册时间结束日期" name="end" class="c-datepicker-data-input only-date" value="{{request('end')}}" readonly>
+                            </div>
                         </div>
                         <input type="submit" value="搜索" class="fl btn ml10 js_submit">
                     </form>
@@ -37,13 +54,10 @@
                             <tr>
                                 <th  style="width: 8%">ID</th>
                                 <th  style="width: 12%">状态</th>
+                                <th  style="width: 15%">手机号</th>
                                 <th  style="width: 15%">昵称</th>
-                                <th  style="width: 15%">头像</th>
-                                <th  style="width: 5%">性别</th>
-                                <th  style="width: 15%">注册时间</th>
-                                <th  style="width: 10%">积分</th>
-                                <th  style="width: 10%">手机号</th>
-                                <th  style="width: 10%">操作</th>
+                                <th  style="width: 25%">注册时间</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -51,12 +65,9 @@
                                 <tr>
                                     <td>{{$lv['id'] ?? ' -- '}}</td>
                                     <td>{{$lv['status'] == 1 ? '正常' : '禁用'}}</td>
+                                    <td>{{$lv['mobile'] ?? ' -- '}}</td>
                                     <td>{{$lv['nickname'] ?? ' -- '}}</td>
-                                    <td>@if($lv['avatar'])<img src="{{$lv['avatar'] ?? ' -- '}}" style="width: 50px; height: 50px;" />@endif</td>
-                                    <td>{{$lv['gender'] == 1?'男':'女'}}</td>
                                     <td>{{$lv['created_at'] ?? ' -- '}}</td>
-                                    <td>{{$lv['integral'] ?? ' -- '}}</td>
-                                    <td>{{$lv['email'] ?? ' -- '}}</td>
                                     <td>
                                         @if($lv['status'] != \App\Models\User::USER_STATUS_STOP)
                                             <a class="do_action" data-confirm="确定要冻结吗？" data-url="{!! url('member/manage/user/close',['user'=>$lv['id']]) !!}">冻结</a>
@@ -89,6 +100,7 @@
         var __seajs_debug = 1;
         seajs.use("/admin/js/app.js", function (app) {
             app.bootstrap();
+            app.load('core/date');
         });
 
     </script>
