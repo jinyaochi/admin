@@ -21,7 +21,7 @@
                                 <input type="text" name="name" placeholder="ID/手机号" class="form-control w260" value="{{request('name')}}">
                             </div>
                             <div class="ml10 mr20 fl">
-                                <select name="school">
+                                <select id="schools" name="school">
                                     <option value="">选择校区</option>
                                     @foreach($school as $s)
                                         <option @if($s['id'] == request('school')) selected @endif value="{{$s['id']}}">{{$s['name']}}</option>
@@ -29,7 +29,7 @@
                                 </select>
                             </div>
                             <div class="ml10 mr20 fl">
-                                <select name="worker">
+                                <select id="workers" name="worker">
                                     <option value="">选择业务员</option>
                                     @foreach($worker as $s)
                                         <option @if($s['id'] == request('worker')) selected @endif value="{{$s['id']}}">{{$s['name']}}</option>
@@ -101,6 +101,7 @@
         seajs.use("/admin/js/app.js", function (app) {
             app.bootstrap();
             app.load('core/date');
+            app.load('school/manage/index/index');
         });
 
     </script>

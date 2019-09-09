@@ -93,7 +93,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
                 Route::any('index/change/{type}/{model}', ['as' => 'index.change', 'uses' => 'IndexController@change']);
                 Route::any('index/user/search', ['as' => 'index.search', 'uses' => 'IndexController@search']);
                 Route::any('worker/{model}', ['as' => 'index.worker', 'uses' => 'WorkerController@index']);
-                Route::any('workerlist', ['as' => 'index.worker', 'uses' => 'WorkerController@index']);
+                Route::any('workerlist', ['as' => 'index.worker', 'uses' => 'WorkerController@workerlist']);
                 Route::any('worker/{model}/create', ['as' => 'index.worker.create', 'uses' => 'WorkerController@create']);
             });
 

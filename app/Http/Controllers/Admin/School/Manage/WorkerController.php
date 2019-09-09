@@ -21,6 +21,18 @@ class WorkerController extends InitController
         $this->template = 'admin.school.manage.worker.';
     }
 
+    public function workerlist(Request $request){
+        $schoolid = $request->schoolid ?? '';
+
+        $lists = User::where(function ($query)use($schoolid){
+            $query->where('schoole_id',$schoolid);
+            $query->where('type','&',User::USER_TYPE_STAFF);
+        })->orderBy('id','DESC')->get();
+
+        return $this->success('success', null, $lists);
+
+    }
+
     public function index(Request $request,School $model = null){
 
         $name = $request->name ?? '';

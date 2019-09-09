@@ -100,6 +100,25 @@ define(function(require, exports, module) {
             }
         });
 
+        $('#schools').on('change',function () {
+            $.ajax({
+                url: '/school/manage/workerlist',
+                type: 'POST',
+                dataType: 'JSON',
+                async: true,
+                data: { schoolid: $('#schools').val()},
+                success: function(data) {
+                    $('#workers').html('<option value="0">选择业务员</option>');
+                    for (var i in data.data) {
+                        $('#workers').append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                    }
+                },
+                error: function() {
+
+                }
+            });
+        });
+
     };
 
     exports.bootstrap = function(e, i) {
