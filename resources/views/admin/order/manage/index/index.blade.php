@@ -30,12 +30,13 @@
                             <thead>
                             <tr>
                                 <th  style="width: 13%">订单号</th>
-                                <th  style="width: 12%">视频名称</th>
+                                <th  style="width: 12%">商品名称</th>
                                 <th  style="width: 15%">下单时间</th>
                                 <th  style="width: 10%">订单状态</th>
-                                <th  style="width: 15%">支付方式</th>
-                                <th  style="width: 15%">支付金额</th>
+                                <th  style="width: 10%">支付方式</th>
+                                <th  style="width: 10%">支付金额</th>
                                 <th  style="width: 10%">姓名</th>
+                                <th  style="width: 10%">电话</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -48,6 +49,7 @@
                                     <td>{{$lv['pay_type'] == 1?'微信支付':'积分支付'}}</td>
                                     <td>{{$lv['price'] ?? ' -- '}}</td>
                                     <td>{{$lv['name'] ?? ' -- '}}</td>
+                                    <td>{{$lv['mobile'] ?? ' -- '}}</td>
                                 </tr>
                             @empty
                                 <tr><td colspan="8">暂时没有任何数据</td> </tr>
