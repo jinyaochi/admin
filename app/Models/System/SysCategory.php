@@ -3,6 +3,7 @@
 namespace App\Models\System;
 
 use App\Models\Collection;
+use App\Models\Gds\GdsGood;
 use App\Models\Model;
 
 class SysCategory extends Model
@@ -27,5 +28,9 @@ class SysCategory extends Model
         $collection = new Collection(SysCategory::where($where)->get());
 
         return $collection->buildTree('parent_id', 'node');
+    }
+
+    public function goods(){
+        return $this->hasMany(GdsGood::class,'category_id');
     }
 }

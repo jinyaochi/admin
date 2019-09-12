@@ -42,28 +42,22 @@ class GoodsController extends InitController
         $data = $request->data;
 
         $rules = [
-            'type' => 'required',
             'name' => 'required|unique:gds_goods,name,'.($model['id'] ?? 'NULL').',id',
             'category_id' => 'required',
-            'teacher' => 'required',
-            'timer' => 'required',
             'price' => 'required',
             'pay' => 'required',
+            'image' => 'required',
+            'url' => 'required',
         ];
         $messages = [
-            'type.required' => '请选择分类',
             'name.required' => '请输入名称',
             'name.unique' => '名称已存在',
             'category_id.required' => '请选择分类',
-            'timer.required' => '请填写视频时长',
             'price.required' => '请输入价格',
             'pay.required' => '请选择支付方式',
+            'image.required' => '请选择封面',
+            'url.required' => '请选择视频',
         ];
-
-        if($model){
-            unset($rules['category_id']);
-            unset($rules['type']);
-        }
 
         $validator = Validator::make($data, $rules, $messages);
         if ($validator->fails()) {
@@ -72,7 +66,6 @@ class GoodsController extends InitController
 
         try {
             $data['intro'] || $data['intro'] = '';
-            $data['timer'] || $data['timer'] = 100;
             $data['sorts'] || $data['sorts'] = 0;
             GdsGood::saveBy($data);
             return $this->success('操作成功',url('product/manage/goods'));

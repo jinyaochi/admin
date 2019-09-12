@@ -14,22 +14,45 @@
                     @if(!empty($category))
                         <input type="hidden" name="data[id]" value="{!! $category['id'] ?? '' !!}">
                     @endif
-                    <div class="form-group">
-                        <label class="col-xs-2 t_r">上级类目：</label>
-                        <div class="col-xs-8">
-                            <select name="data[parent_id]" class="select-change-style w160" @if(!empty($category['id'])) disabled="disabled" @endif >
-                            <option value="0">---请选择----</option>
-                            @foreach($categories as $item)
-                                <option value="{{$item['id']}}" @if($category['parent_id'] == $item['id']) selected @endif >{{'|' . str_repeat(' -- ',$item['level'])}}{{$item['name']}}</option>
-                            @endforeach
-                            </select>
-                        </div>
-                    </div>
+                    {{--<div class="form-group">--}}
+                        {{--<label class="col-xs-2 t_r">上级类目：</label>--}}
+                        {{--<div class="col-xs-8">--}}
+                            {{--<select name="data[parent_id]" class="select-change-style w160" @if(!empty($category['id'])) disabled="disabled" @endif >--}}
+                            {{--<option value="0">---请选择----</option>--}}
+                            {{--@foreach($categories as $item)--}}
+                                {{--<option value="{{$item['id']}}" @if($category['parent_id'] == $item['id']) selected @endif >{{'|' . str_repeat(' -- ',$item['level'])}}{{$item['name']}}</option>--}}
+                            {{--@endforeach--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
                     <div class="form-group category-msg-l1">
                         <label class="col-xs-2 t_r"><span class="red">*</span>类目名称：</label>
                         <div class="col-xs-4">
                             <input type="text" class="form-control" placeholder="1-32个字符" name="data[name]" maxlength="32" value="{{$category->name ?? ''}}">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-xs-2 t_r">封面：</label>
+                        <div class="col-xs-9">
+                            <ul class="multimage-gallery clearfix" id="photo-list">
+                                <li id="image_box" class="my-upload-img">
+                                    @if(!empty($category['image']))
+                                        <span class="self-add-img">
+                                            <img src="{{$category['image']}}">
+                                            <input type="hidden" name="data[image]" value="{{$category['image']}}">
+                                            <span hidden="" class="img-delete">
+                                                <i class="icon-shanchu iconfont"></i>
+                                            </span>
+                                        </span>
+                                    @endif
+                                </li>
+                                <li @if(isset($category['image'])) hidden @endif class="image-upload-add" data-num="1" data-box="image_box" data-item='<span class="self-add-img"><img src=""><input type="hidden" name="data[image]" value=""><span hidden="" class="img-delete"><i class="icon-shanchu iconfont"></i></span></span>'>
+                                    <a class="tra_photofile">上传图片</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     {{--<div class="form-group">--}}

@@ -37,9 +37,11 @@ class CategoryController extends InitController
 
         $rules = [
             'name' => 'required|unique:sys_categories,name,'.($category['id'] ?? 'NULL').',id',
+            'image' => 'required',
         ];
         $messages = [
             'name.required' => '请输入分类名称',
+            'image.required' => '缺少封面',
             'name.unique' => '分类已存在',
         ];
 
@@ -57,5 +59,13 @@ class CategoryController extends InitController
         }catch (\Exception $e) {
             return $this->error('操作异常，请联系开发人员'.$e->getMessage());
         }
+    }
+
+    public function delete(Request $request, SysCategory $category = null){
+
+        $category->goods()->delete();
+        $category->delete();
+        return $this->success('操作成功',url('product/manage/category'));
+
     }
 }

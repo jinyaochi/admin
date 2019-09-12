@@ -43,6 +43,7 @@
                                     <td>{{$lv['status'] != 1? '停止':'正常'}}</td>
                                     <td>
                                         <a href="{!! url('product/manage/category/create',['category'=>$lv['id']]) !!}">编辑</a>
+                                        <a class="do_action" data-confirm="确定要删除吗？" data-url="{!! url('product/manage/category/delete',['id'=>$lv['id']]) !!}">删除</a>
                                     </td>
                                 </tr>
                             @empty

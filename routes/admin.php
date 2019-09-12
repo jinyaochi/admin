@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
                 Route::any('goods/skus/delete/{sku?}', ['as' => 'goods.skus.delete', 'uses' => 'SkusController@delete']);
                 Route::get('category', ['as' => 'category', 'uses' => 'CategoryController@index']);
                 Route::any('category/create/{category?}', ['as' => 'category.create', 'uses' => 'CategoryController@create']);
+                Route::any('category/delete/{category?}', ['as' => 'category.delete', 'uses' => 'CategoryController@delete']);
                 Route::get('comment', ['as' => 'comment', 'uses' => 'CommentController@index']);
                 Route::get('comment/delete/{model}', ['as' => 'comment.delete', 'uses' => 'CommentController@delete']);
                 Route::get('class', ['as' => 'class', 'uses' => 'ClassController@index']);
