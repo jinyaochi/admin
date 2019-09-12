@@ -50,7 +50,6 @@
                                     <td>{{$lv['pay_name'] ?? ''}}</td>
                                     <td>{{$lv['category']['name'] ?? ''}}</td>
                                     <td>
-                                        <a class="red" href="{!! url('product/manage/goods/skus',['id'=>$lv['id']]) !!}">视频管理</a>
                                         <a href="{!! url('product/manage/goods/create',['id'=>$lv['id']]) !!}">编辑</a>
                                         <a class="do_action" data-confirm="确定要删除吗？" data-url="{!! url('product/manage/goods/delete',['id'=>$lv['id']]) !!}">删除</a>
                                     </td>
