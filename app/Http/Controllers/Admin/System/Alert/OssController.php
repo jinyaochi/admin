@@ -45,10 +45,10 @@ class OssController extends InitController
     }
 
     public function auth(Request $request){
-        $id= 'LTAIJi8dX86LKtBG';
-        $key= 'OMGo8jURX98RhLayhv2BxkN2xPuY5b';
-        $host = 'https://zhongtuizaixian.oss-cn-beijing.aliyuncs.com/';
-        $callbackurl = 'http://admin.zhongyi108.com/callback/oss/'.\Auth::user()->id ?? 0;
+        $id= 'LTAIHu0bFK0fG3Ia';
+        $key= 'j2ie4qdir49cML0ixR6ggjo8FcmLfI';
+        $host = 'https://tinyuse-video.oss-cn-beijing.aliyuncs.com/';
+        $callbackurl = 'http://admin.qq.im/callback/oss/'.\Auth::user()->id ?? 0;
 
         $now = time();
         $expire = 300; //设置该policy超时时间是10s. 即这个policy过了这个有效时间，将不能访问
