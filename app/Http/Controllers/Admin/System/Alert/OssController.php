@@ -31,6 +31,14 @@ class OssController extends InitController
         ])->orderBy('type','ASC')->orderBy('id','DESC')->paginate(self::PAGESIZE);
     }
 
+    public function deleltefile(Request $request){
+
+        $ids = $request->ids ?? [];
+
+        SysMedia::whereIn('id',$ids)->delete();
+        return $this->success('删除成功');
+    }
+
     public function mkdir(Request $request){
         $user = \Auth::user();
         SysMedia::saveBy([

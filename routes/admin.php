@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
                 Route::get('oss/auth', ['as' => 'oss.auth', 'uses' => 'OssController@auth']);
                 Route::post('oss/file/{parent}', ['as' => 'oss.file', 'uses' => 'OssController@file']);
                 Route::post('oss/mkdir', ['as' => 'oss.mkdir', 'uses' => 'OssController@mkdir']);
+                Route::post('oss/deleltefile', ['as' => 'oss.deleltefile', 'uses' => 'OssController@deleltefile']);
             });
         });
 

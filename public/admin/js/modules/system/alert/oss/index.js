@@ -29,6 +29,41 @@ define(function(require, exports, module) {
             window.location.href = '/system/alert/oss?parent='+$(this).data('id')
         })
 
+        //删除文件
+        $('#deletefile').click(function () {
+            var allImg = $('.img-row .img-item-box .img-mark.icon-fuxuankuang');
+            var ids = {};
+            allImg.each(function (k, v) {
+                $(this).data('id') ? ids[$(this).data('id')] = $(this).data('id'):null;
+            });
+            if (ids.length == 0) {
+                message.error('请选择！');
+                return false
+            }else{
+                console.log(ids);
+                $.ajax({
+                    url: '/system/alert/oss/deleltefile',
+                    type: 'POST',
+                    data: {
+                        ids:ids
+                    },
+                    async: false,
+                    dataType:'json',
+                    success: function(data){
+                        if(data.status){
+                            message.success('删除成功');
+                            setTimeout(function () {
+                                window.location.href = '/system/alert/oss?parent='+$('#parent_dir').data('parent')
+                            },1000);
+                        }else{
+                            message.success('删除失败');
+                        }
+                    }
+                });
+            };
+        });
+
+
         //保存图片
         $('.content-ft .btn-primary').click(function(){
             var allImg = $('.img-row .img-item-box .img-mark.icon-fuxuankuang');
@@ -188,19 +223,19 @@ define(function(require, exports, module) {
                                     str += '<div class="img-item-box">\
                                     <img src="'+data.data[i].host+data.data[i].path+'">\
                                     <p>'+data.data[i].title+'</p>\
-                                    <i class="iconfont img-mark icon-fuxuankuang1"></i>\
+                                    <i class="iconfont img-mark icon-fuxuankuang1" data-id="'+data.data[i].id+'"></i>\
                                     </div>';
                                 }else if(/video\//.test(data.data[i].mime_type) || data.data[i].file_tail == 'mkv'){
                                     str += '<div class="img-item-box">\
                                     <img src="'+data.data[i].host+data.data[i].path+'?x-oss-process=video/snapshot,t_6000">\
                                     <p>'+data.data[i].title+'</p>\
-                                    <i class="iconfont img-mark icon-fuxuankuang1"></i>\
+                                    <i class="iconfont img-mark icon-fuxuankuang1" data-id="'+data.data[i].id+'"></i>\
                                     </div>';
                                 }else{
                                     str += '<div class="img-item-box">\
                                     <img src="/admin/images/default.png">\
                                     <p>'+data.data[i].title+'</p>\
-                                    <i class="iconfont img-mark icon-fuxuankuang1"></i>\
+                                    <i class="iconfont img-mark icon-fuxuankuang1" data-id="'+data.data[i].id+'"></i>\
                                     </div>';
                                 }
                             }

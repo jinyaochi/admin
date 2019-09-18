@@ -56,6 +56,7 @@
                     </div>
                 </div>
                 <div class="content-ft">
+                    <button id="deletefile" class="btn-default" style="float: left;">删除</button>
                     <button class="el-blue btn-primary">保存</button>
                     <button class="el-cancel btn-default">取消</button>
                 </div>
