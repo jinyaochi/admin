@@ -18,7 +18,7 @@ class LoginController extends InitController{
     public function login(Request $request)
     {
         $appid = env('MALL_APPID'); //填写微信小程序appid  正式服
-        $secret = 'c53b47909a0a814369023db2ff26083f'; //填写微信小程序secret
+        $secret = env('MALL_SECRET'); //填写微信小程序secret
 
         $code = $request->code ?? '';
 

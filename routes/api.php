@@ -20,42 +20,9 @@ use Illuminate\Http\Request;
 
 Route::post('login', 'LoginController@login');
 Route::post('refresh', 'LoginController@refresh');
-Route::post('index', 'IndexController@index');
-Route::post('callback', 'IndexController@callback');
-Route::post('goods', 'IndexController@goods');
-Route::post('category', 'IndexController@category');
-Route::post('cate', 'IndexController@cate');
+
+Route::post('index', 'MainController@index');
 
 Route::group(['middleware' => ['jwt.auth']], function ($api) {
 
-    //新的
-
-
-
-    //新的
-
-    Route::post('logout', 'LoginController@logout');
-    Route::post('userinfo', 'LoginController@userinfo');
-    Route::post('sign', 'LoginController@sign');
-    Route::post('integral', 'IndexController@integral');
-    Route::post('integral/delete/{model}', 'IndexController@integralDelete');
-    Route::post('tel', 'IndexController@tel');
-    Route::post('buy', 'IndexController@buy');
-    Route::post('rule', 'IndexController@rule');
-    Route::post('clearcatch', 'IndexController@clearcatch');
-    Route::post('question', 'IndexController@question');
-    Route::post('question2', 'IndexController@question2');
-    Route::post('message', 'IndexController@message');
-    Route::post('message/change', 'IndexController@changemessage');
-    Route::post('message/lists', 'IndexController@mlists');
-    Route::post('message/detail/{model}', 'IndexController@dmessage');
-    Route::post('detail/{model}', 'IndexController@detail');
-    Route::post('sku/detail/{model}', 'IndexController@detailsku');
-    Route::post('goods/buyed/{model}', 'IndexController@isbuyed');
-    Route::post('share/{model}', 'IndexController@share');
-    Route::post('pay/{model}', 'IndexController@pay');
-    Route::post('saveuserinfo', 'IndexController@saveuserinfo');
-    Route::post('comment', 'IndexController@comment');
-    Route::post('tozan', 'IndexController@tozan');
-    Route::post('userinfomobile', 'IndexController@userinfomobile');
 });
