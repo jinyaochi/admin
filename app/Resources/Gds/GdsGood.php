@@ -28,9 +28,10 @@ class GdsGood extends Base
             'video' => explode('?',$this->url)[0],
             'intro' => $this->intro ?? '暂无简介',
             'cover' => $this->image ?? '',
-            'collect' => $this->timer ?? '',
+            'collect' => $this->collect()->count() ?? '',
             'zan' => $this->zan()->count() ?? '',
-            'view' => $this->number ?? '',
+            'view' => $this->view()->count() ?? '',
+            'viewer' => $this->view()->take(3),
         ];
     }
 

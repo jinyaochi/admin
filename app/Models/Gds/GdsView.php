@@ -11,7 +11,7 @@ namespace App\Models\Gds;
 
 use App\Models\Model;
 
-class GdsZan extends Model
+class GdsView extends Model
 {
     public function model()
     {
