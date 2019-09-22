@@ -17,6 +17,12 @@ use App\Resources\System\SysCategory as SysCategoryRescource;
 
 class MainController extends InitController
 {
+    /**
+     * @param Request $request
+     * @return mixed
+     *
+     * 首页视频
+     */
     public function index(Request $request){
 
         return GdsGoodRescource::collection(GdsGood::where([
@@ -24,8 +30,23 @@ class MainController extends InitController
         ])->get());
     }
 
+    /**
+     * @return mixed
+     * 分类列表
+     */
     public function category(){
 
-        return SysCategoryRescource::collection(SysCategory::all());
+        return SysCategoryRescource::collection(SysCategory::take(3)->get());
+    }
+
+    /**
+     * @param Request $request
+     * @param GdsGood|null $model
+     * @return array
+     * 视频详情
+     */
+    public function goods(Request $request,GdsGood $model = null){
+
+        return [];
     }
 }

@@ -8,6 +8,7 @@ use App\Models\Gds\GdsGood;
 use App\Models\Gds\GdsView;
 use App\Models\Gds\GdsZan;
 use App\Models\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class SysCategory extends Model
 {
@@ -15,6 +16,20 @@ class SysCategory extends Model
 
     const STATUS_OK = 1;
     const STATUS_NO = 2;
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('sorts', function(Builder $builder) {
+            $builder->orderBy('sorts', 'desc');
+        });
+    }
 
     /**
      * @param int $gurad
