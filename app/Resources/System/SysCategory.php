@@ -22,7 +22,10 @@ class SysCategory extends Base
     {
         return [
             'id' => $this->id ?? 0,
-            'name' => $this->name ?? ''
+            'name' => $this->name ?? '',
+            'collect' => $this->collect()->count() ?? '',
+            'view' => $this->view()->count() ?? '',
+            'zan' => $this->zan()->count() ?? '',
         ];
     }
 }

@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Admin\Product\Manage;
 use App\Http\Controllers\Admin\InitController;
 use App\Models\Gds\GdsGood;
 use App\Models\System\SysCategory;
-use App\Models\System\SysCate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -35,8 +34,7 @@ class GoodsController extends InitController
     public function create(Request $request,GdsGood $model = null){
         if($request->isMethod('get')) {
             $categories = SysCategory::getCategorys(SysCategory::TYPE_PRODUCT,SysCategory::STATUS_OK)->mergeTree('node');
-            $categories2 = SysCate::getCategorys(SysCate::TYPE_PRODUCT,SysCate::STATUS_OK)->mergeTree('node');
-            return view($this->template . __FUNCTION__, compact('model','categories','categories2'));
+            return view($this->template . __FUNCTION__, compact('model','categories'));
         }
 
         $data = $request->data;
