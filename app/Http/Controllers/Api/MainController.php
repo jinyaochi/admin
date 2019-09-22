@@ -47,6 +47,7 @@ class MainController extends InitController
      */
     public function goods(Request $request,GdsGood $model = null){
 
+        //增加浏览量
         return [];
     }
 }
