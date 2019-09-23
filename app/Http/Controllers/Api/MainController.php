@@ -59,7 +59,7 @@ class MainController extends InitController
      */
     public function school(Request $request){
 
-        return SchoolRescource::collection(School::all());
+        return SchoolRescource::collection(School::where('status',School::SCHOOL_STATUS_OPEN)->get());
 
     }
 }
