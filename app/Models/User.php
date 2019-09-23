@@ -27,7 +27,7 @@ class User extends Authenticatable implements JWTSubject
     const USER_TYPE_STAFF = 4;
     const USER_TYPE_MEMBER = 8;
 
-    protected $appends = ['change_code'];
+    protected $appends = ['change_code','cover'];
 
     /**
      * The attributes that are mass assignable.
@@ -37,6 +37,11 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name', 'nickname', 'email', 'password','mobile','openid','type'
     ];
+
+    public function getCoverAttribute()
+    {
+        return $this->avatar ?: env('APP_URL').'/static/images/head-img1.png';
+    }
 
     /**
      * The attributes that should be hidden for arrays.

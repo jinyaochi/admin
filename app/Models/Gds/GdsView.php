@@ -13,7 +13,7 @@ use App\Models\Model;
 
 class GdsView extends Model
 {
-    public function model()
+    public function gds_views()
     {
         return $this->morphTo();
     }

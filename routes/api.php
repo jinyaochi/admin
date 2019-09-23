@@ -23,6 +23,7 @@ Route::post('refresh', 'LoginController@refresh');
 
 Route::post('index', 'MainController@index');
 Route::post('category', 'MainController@category');
+Route::post('school', 'MainController@school');
 
 Route::post('goods/{model}','MainController@goods');
 

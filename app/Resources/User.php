@@ -14,7 +14,9 @@ class User extends Base
     {
         return [
             'id' => $this->id ?? 0,
-            'integral' => $this->integral ?? 0,
+            'name' => $this->name ?? 0,
+            'cover' => $this->cover ?? '',
+            'nickname' => $this->nickname ?? '',
             'mobile' => $this->email ?? 0,
         ];
     }

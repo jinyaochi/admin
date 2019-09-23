@@ -9,6 +9,7 @@
 namespace App\Resources\Gds;
 
 use App\Resources\Base;
+use App\Resources\User as UserRescource;
 
 class GdsGood extends Base
 {
@@ -31,7 +32,7 @@ class GdsGood extends Base
             'collect' => $this->collect()->count() ?? '',
             'zan' => $this->zan()->count() ?? '',
             'view' => $this->view()->count() ?? '',
-            'viewer' => $this->view()->take(3),
+            'viewer' => UserRescource::collection($this->viewer()->take(3)->get()),
         ];
     }
 

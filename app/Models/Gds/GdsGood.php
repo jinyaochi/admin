@@ -11,6 +11,7 @@ namespace App\Models\Gds;
 use App\Models\Model;
 use App\Models\Ord\OrdOrder;
 use App\Models\System\SysCategory;
+use App\Models\User;
 
 class GdsGood extends Model
 {
@@ -34,7 +35,11 @@ class GdsGood extends Model
     }
     public function view()
     {
-        return $this->morphMany(GdsView::class, 'model');
+        return $this->morphMany(GdsView::class, 'gds_views');
+    }
+    public function viewer()
+    {
+        return $this->morphToMany(User::class, 'gds_views');
     }
     public function collect()
     {

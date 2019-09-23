@@ -59,6 +59,6 @@ class SysCategory extends Model
         return $this->hasManyThrough(GdsZan::class, GdsGood::class,'category_id','model_id')->where('model_type',GdsGood::class);
     }
     public function view(){
-        return $this->hasManyThrough(GdsView::class, GdsGood::class,'category_id','model_id')->where('model_type',GdsGood::class);
+        return $this->hasManyThrough(GdsView::class, GdsGood::class,'category_id','gds_views_id')->where('gds_views_type',GdsGood::class);
     }
 }

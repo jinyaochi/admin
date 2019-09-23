@@ -36,7 +36,7 @@
                                 <th  style="width: 12%">校区</th>
                                 <th  style="width: 15%">昵称</th>
                                 <th  style="width: 15%">头像</th>
-                                <th  style="width: 10%">邀请码</th>
+                                <th  style="width: 10%">操作</th>
                             </tr>
                             </thead>
                             <tbody>
