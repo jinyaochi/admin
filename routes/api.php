@@ -18,7 +18,8 @@ use Illuminate\Http\Request;
 
 
 
-Route::post('login', 'LoginController@login');
+Route::post('mobile/login', 'LoginController@mobile');
+Route::post('wx/login', 'LoginController@wx');
 Route::post('refresh', 'LoginController@refresh');
 Route::post('user', 'LoginController@userinfo');
 Route::post('send/code', 'LoginController@code');
