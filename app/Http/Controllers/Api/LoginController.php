@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
-use App\Resources\User as UserResource;
+use App\Resources\User as UserRescource;
 use App\Transformers\UserTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +36,14 @@ class LoginController extends InitController{
         return $this->respondWithToken($token,$wJson['openid'],$wJson);
     }
 
+    /**
+     * @param Request $request
+     * 发送短信
+     */
+    public function code(Request $request){
+
+    }
+
 
     /**
      * Get the authenticated User
@@ -45,15 +53,10 @@ class LoginController extends InitController{
     public function userinfo()
     {
         $user = $this->guard()->user();
-
-        return $this->success('success',null,[
-            'user' => new UserResource($user),
-            'issign' => User\UserIntegralLog::where([
-                ['type','=',User\UserIntegralLog::TYPE_SIGN_IN],
-                ['user_id','=',$user->id],
-                ['created_at','>',date('Y-m-d 00:00:00')],
-            ])->first() ? 1 : 0,
-        ]);
+        if(!$user){
+            return $this->error('no login');
+        }
+        return new UserRescource($user);
     }
 
     /**

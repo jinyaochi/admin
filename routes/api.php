@@ -20,6 +20,8 @@ use Illuminate\Http\Request;
 
 Route::post('login', 'LoginController@login');
 Route::post('refresh', 'LoginController@refresh');
+Route::post('user', 'LoginController@userinfo');
+Route::post('send/code', 'LoginController@code');
 
 Route::post('index', 'MainController@index');
 Route::post('category', 'MainController@category');
@@ -28,5 +30,6 @@ Route::post('school', 'MainController@school');
 Route::post('goods/{model}','MainController@goods');
 
 Route::group(['middleware' => ['jwt.auth']], function ($api) {
+
 
 });
