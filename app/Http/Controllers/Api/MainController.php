@@ -59,7 +59,10 @@ class MainController extends InitController
      */
     public function school(Request $request){
 
-        return SchoolRescource::collection(School::where('status',School::SCHOOL_STATUS_OPEN)->get());
+        $latitude = $request->latitude ?? 0;
+        $longitude = $request->longitude ?? 0;
+
+        return SchoolRescource::collection(School::where('status',School::SCHOOL_STATUS_OPEN)->orderByRaw('abs(lat-'.$latitude.') + abs(lng-'.$longitude.')')->get());
 
     }
 }

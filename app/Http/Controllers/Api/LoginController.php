@@ -75,8 +75,12 @@ class LoginController extends InitController{
         }
 
         $user = User::firstOrCreate(['openid' => $wJson['openid']], [
-            'type' => User::USER_TYPE_MEMBER
+            'type' => User::USER_TYPE_MEMBER,
+            'avatar' => $request->detail['avatarUrl'],
+            'gender' => $request->detail['gender'],
+            'nickname' => $request->detail['nickName'],
         ]);
+
         $token = \JWTAuth::fromUser($user);
 
         return $this->respondWithToken($token,$wJson['openid'],$wJson);

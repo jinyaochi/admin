@@ -25,6 +25,7 @@ class School extends Base
             'location' => $this->location ?? 0,
             'lat' => $this->lat ?? 0,
             'lng' => $this->lng ?? 0,
+            'distence' => $request->latitude ? get_real_distance($this->lat,$this->lng,$request->latitude,$request->longitude): 0
         ];
     }
 }

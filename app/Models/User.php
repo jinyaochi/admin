@@ -35,7 +35,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'nickname', 'email', 'password','mobile','openid','type'
+        'name', 'nickname', 'email', 'password','mobile','openid','type','avatar','gender'
     ];
 
     public function getCoverAttribute()
