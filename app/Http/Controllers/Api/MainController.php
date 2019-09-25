@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Comment;
 use App\Models\Gds\GdsGood;
 use App\Models\School;
 use App\Models\System\SysCategory;
@@ -113,9 +114,24 @@ class MainController extends InitController
         $model->comment()->create([
             'content' => $data['content'],
             'user_id' => $user->id,
+            'parent_id' => $user->parent_id ?: 0,
+            'reply_id' => $user->reply_id ?: 0,
         ]);
 
-        return 1111;
+        return $this->success('评论成功');
 
+    }
+
+    public function schoolCommentsZan(Request $request,Comment $model = null){
+        $user = \Auth::user();
+
+        if($has = $model->zan()->where('user_id',$user['id'])->first()){
+            $has->delete();
+        }else{
+            $model->zan()->create([
+                'user_id' => \Auth::user()->id
+            ]);
+        }
+        return $this->success('点赞成功');
     }
 }

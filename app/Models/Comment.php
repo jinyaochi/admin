@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Comment extends Model
 {
     protected $fillable = [
-        'content','user_id'
+        'content','user_id','parent_id','reply_id'
     ];
     /**
      * The "booting" method of the model.
@@ -38,5 +38,17 @@ class Comment extends Model
     public function zan()
     {
         return $this->morphMany(GdsZan::class, 'model');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function son(){
+        return $this->hasMany(Comment::class,'parent_id');
+    }
+
+    public function reply(){
+        return $this->belongsTo(Comment::class,'reply_id');
     }
 }
