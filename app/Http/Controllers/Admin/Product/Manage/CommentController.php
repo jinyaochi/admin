@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\Admin\Product\Manage;
 
 use App\Http\Controllers\Admin\InitController;
-use App\Models\Gds\GdsComment;
+use App\Models\Gds\Comment;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -21,10 +21,10 @@ class CommentController extends InitController
     }
 
     public function index(Request $request){
-        $lists = GdsComment::paginate(self::PAGESIZE);
+        $lists = Comment::paginate(self::PAGESIZE);
         return view( $this->template. __FUNCTION__,compact('lists'));
     }
-    public function delete(GdsComment $model = null){
+    public function delete(Comment $model = null){
         $model->delete();
         return $this->success('操作成功');
     }

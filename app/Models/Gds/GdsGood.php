@@ -26,7 +26,7 @@ class GdsGood extends Model
     }
 
     public function comment(){
-        return $this->hasMany(GdsComment::class,'spu_id');
+        return $this->morphMany(Comment::class, 'model');
     }
 
     public function zan()

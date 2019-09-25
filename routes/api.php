@@ -27,10 +27,13 @@ Route::post('send/code', 'LoginController@code');
 Route::post('index', 'MainController@index');
 Route::post('category', 'MainController@category');
 Route::post('school', 'MainController@school');
+Route::post('school/show/{model}', 'MainController@schoolShow');
+Route::post('school/comments/{model}', 'MainController@schoolComments')->where(['model' => '[\d]+']);
 
 Route::post('goods/{model}','MainController@goods');
 
-Route::group(['middleware' => ['jwt.auth']], function ($api) {
+Route::group(['middleware' => ['jwt.auth']], function () {
+    Route::post('school/comments/{model}/create', 'MainController@schoolCommentsCreate')->where(['model' => '[\d]+']);
 
 
 });

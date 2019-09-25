@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\Api;
 
 
-use App\Models\Gds\GdsComment;
+use App\Models\Gds\Comment;
 use App\Models\Gds\GdsGood;
 use App\Models\Gds\GdsSku;
 use App\Models\Gds\GdsZan;
@@ -102,7 +102,7 @@ class IndexController extends InitController
         }
         $user = \Auth::user();
 
-        GdsComment::saveBy([
+        Comment::saveBy([
             'user_id' => $user->id ?? 0,
             'order_id' => $data['backid'] ?? 0,
             'spu_id' => $data['goodsid'],
