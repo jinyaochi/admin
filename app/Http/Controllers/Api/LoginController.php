@@ -161,6 +161,15 @@ class LoginController extends InitController{
 
     }
 
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken($this->guard()->refresh());
+    }
 
     /**
      * Get the authenticated User

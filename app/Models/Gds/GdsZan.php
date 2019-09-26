@@ -13,6 +13,10 @@ use App\Models\Model;
 
 class GdsZan extends Model
 {
+    protected $fillable = [
+        'user_id'
+    ];
+
     public function model()
     {
         return $this->morphTo();

@@ -20,7 +20,7 @@ class Comment extends Base
             'content' => $this->content ?? ' -- ',
             'zan' => $this->zan()->count(),
             'selfzan' => $this->zan()->where([
-                'user_id' => \Auth::user()->id ?? 0
+                'user_id' => \Auth::guard(config('app.guard.api'))->user()->id ?? 0
             ])->count(),
             'reply_name' => $this->reply->user->show_name ?? '',
             'son' => Comment::collection($this->son)
