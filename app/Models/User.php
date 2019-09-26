@@ -27,7 +27,7 @@ class User extends Authenticatable implements JWTSubject
     const USER_TYPE_STAFF = 4;
     const USER_TYPE_MEMBER = 8;
 
-    protected $appends = ['change_code','cover'];
+    protected $appends = ['change_code','cover','show_name'];
 
     /**
      * The attributes that are mass assignable.
@@ -84,6 +84,11 @@ class User extends Authenticatable implements JWTSubject
      */
     public function message(){
         return $this->hasMany(UserMessage::class,'user_id');
+    }
+
+    public function getShowNameAttribute()
+    {
+        return $this->nickname ?: substr_replace($this->mobile,'***',3,5) ?? '';
     }
 
     /**

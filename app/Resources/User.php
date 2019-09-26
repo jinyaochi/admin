@@ -16,7 +16,7 @@ class User extends Base
             'id' => $this->id ?? 0,
             'name' => $this->name ?? 0,
             'cover' => $this->cover ?? '',
-            'nickname' => $this->nickname ?: $this->mobile ?? '',
+            'nickname' => $this->show_name ?? '',
             'mobile' => $this->mobile ?? '',
         ];
     }

@@ -14,7 +14,7 @@ class Comment extends Base
     {
         return [
             'id' => $this->id ?? 0,
-            'name' => $this->user->nickname ?? 0,
+            'name' => $this->user->show_name ?? 0,
             'cover' => $this->user->cover ?? 0,
             'created_at' => explode(' ',(string)$this->created_at)[0],
             'content' => $this->content ?? ' -- ',
@@ -22,7 +22,7 @@ class Comment extends Base
             'selfzan' => $this->zan()->where([
                 'user_id' => \Auth::user()->id ?? 0
             ])->count(),
-            'reply_name' => $this->reply->user->nickname ?? '',
+            'reply_name' => $this->reply->user->show_name ?? '',
             'son' => Comment::collection($this->son)
         ];
     }

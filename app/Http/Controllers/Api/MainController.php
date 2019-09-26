@@ -114,8 +114,8 @@ class MainController extends InitController
         $model->comment()->create([
             'content' => $data['content'],
             'user_id' => $user->id,
-            'parent_id' => $user->parent_id ?: 0,
-            'reply_id' => $user->reply_id ?: 0,
+            'parent_id' => $request->parent_id ?: 0,
+            'reply_id' => $request->reply_id ?: 0,
         ]);
 
         return $this->success('评论成功');
