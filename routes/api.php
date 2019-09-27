@@ -31,6 +31,7 @@ Route::post('school/show/{model}', 'MainController@schoolShow');
 Route::post('school/comments/{model}', 'MainController@schoolComments')->where(['model' => '[\d]+']);
 
 Route::post('goods/{model}','MainController@goods');
+Route::post('appoint/{type}','MainController@appoint');
 
 Route::group(['middleware' => ['jwt.auth']], function () {
     Route::post('school/comments/{model}/create', 'MainController@schoolCommentsCreate')->where(['model' => '[\d]+']);

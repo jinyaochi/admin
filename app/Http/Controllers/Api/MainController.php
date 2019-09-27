@@ -122,6 +122,12 @@ class MainController extends InitController
 
     }
 
+    /**
+     * @param Request $request
+     * @param Comment|null $model
+     * @return \Illuminate\Http\JsonResponse
+     * 学校点赞
+     */
     public function schoolCommentsZan(Request $request,Comment $model = null){
         $user = \Auth::user();
 
@@ -134,4 +140,17 @@ class MainController extends InitController
         }
         return $this->success('点赞成功');
     }
+
+    /**
+     * @param Request $request
+     * @param int $type
+     * @return \Illuminate\Http\JsonResponse
+     * 预约联系客服
+     */
+    public function appoint(Request $request,$type = 1){
+
+
+        return $this->success('提交成功');
+    }
+
 }
