@@ -40,6 +40,11 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::post('goods/comments/{model}/create', 'MainController@goodsCommentsCreate')->where(['model' => '[\d]+']);
     Route::post('school/comments/{model}/zan', 'MainController@schoolCommentsZan')->where(['model' => '[\d]+']);
     Route::post('goods/comments/{model}/zan', 'MainController@goodsCommentsZan')->where(['model' => '[\d]+']);
+    Route::post('goods/collect/{model}', 'MainController@goodsCollect')->where(['model' => '[\d]+']);
+    Route::post('goods/zan/{model}', 'MainController@goodsZan')->where(['model' => '[\d]+']);
+
+    Route::post('mycollect', 'MainController@mycollect')->where(['model' => '[\d]+']);
+    Route::post('mybuy', 'MainController@mybuy')->where(['model' => '[\d]+']);
 
 
 });

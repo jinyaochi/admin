@@ -38,6 +38,24 @@ class MainController extends InitController
     }
 
     /**
+     * 我的收藏
+     */
+    public function mycollect(){
+        $user = \Auth::user();
+        return GdsGoodRescource::collection($user->collect);
+    }
+
+    /**
+     * 我的购买
+     */
+    public function mybuy(){
+        $user = \Auth::user();
+        return GdsGoodRescource::collection(GdsGood::whereHas('order',function ($query)use($user){
+            $query->where('user_id',$user->id);
+        })->get());
+    }
+
+    /**
      * @return mixed
      * 分类列表
      */
@@ -178,6 +196,44 @@ class MainController extends InitController
 
         return $this->success('评论成功');
 
+    }
+
+    /**
+     * @param Request $request
+     * @param GdsGood|null $model
+     * @return \Illuminate\Http\JsonResponse
+     * 商品收藏
+     */
+    public function goodsCollect(Request $request,GdsGood $model = null){
+        $user = \Auth::user();
+
+        if($has = $model->collect()->where('user_id',$user['id'])->first()){
+            $has->delete();
+        }else{
+            $model->collect()->create([
+                'user_id' => \Auth::user()->id
+            ]);
+        }
+        return $this->success('收藏成功');
+    }
+
+    /**
+     * @param Request $request
+     * @param GdsGood|null $model
+     * @return \Illuminate\Http\JsonResponse
+     * 商品点赞
+     */
+    public function goodsZan(Request $request,GdsGood $model = null){
+        $user = \Auth::user();
+
+        if($has = $model->zan()->where('user_id',$user['id'])->first()){
+            $has->delete();
+        }else{
+            $model->zan()->create([
+                'user_id' => \Auth::user()->id
+            ]);
+        }
+        return $this->success('点赞成功');
     }
 
     /**

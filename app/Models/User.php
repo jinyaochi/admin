@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Http\Traits\MiniProgramTrait;
 use App\Http\Traits\ModelQueryExtend;
+use App\Models\Gds\GdsGood;
 use App\Models\Ord\OrdOrder;
 use App\Models\User\UserMessage;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -70,6 +71,10 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function collect(){
+        return $this->belongsToMany(GdsGood::class,'gds_collects','user_id','model_id')->where('model_type',GdsGood::class)->orderBy('id','DESC');
     }
 
     /**
