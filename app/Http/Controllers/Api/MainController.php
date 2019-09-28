@@ -8,10 +8,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Appoint;
 use App\Models\Comment;
 use App\Models\Gds\GdsGood;
 use App\Models\School;
 use App\Models\System\SysCategory;
+use App\Models\User\UserCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Resources\Gds\GdsGood as GdsGoodRescource;
@@ -46,6 +48,15 @@ class MainController extends InitController
 
     /**
      * @param Request $request
+     * @param SysCategory|null $model
+     * 分类商品详情
+     */
+    public function categoryGoods(Request $request,SysCategory $model = null){
+
+        return new SysCategoryRescource($model,true);
+    }
+    /**
+     * @param Request $request
      * @param GdsGood|null $model
      * @return array
      * 视频详情
@@ -53,7 +64,10 @@ class MainController extends InitController
     public function goods(Request $request,GdsGood $model = null){
 
         //增加浏览量
-        return [];
+        $model->view()->create([
+            'user_id' => \Auth::guard(config('app.guard.api'))->user()->id ?? 0
+        ]);
+        return new GdsGoodRescource($model);
     }
 
     /**
@@ -86,6 +100,50 @@ class MainController extends InitController
 
         return CommentRescource::collection($model->comment()->where('parent_id',0)->get());
 
+    }
+
+    /**
+     * @param Request $request
+     * @param School|null $model
+     * @return mixed
+     * 商品评论列表
+     */
+    public function goodsComments(Request $request,GdsGood $model = null){
+        return CommentRescource::collection($model->comment()->where('parent_id',0)->get());
+    }
+
+    /**
+     * @param Request $request
+     * @param GdsGood|null $model
+     * @return \Illuminate\Http\JsonResponse
+     * 商品评论
+     */
+    public function goodsCommentsCreate(Request $request,GdsGood $model = null){
+        $data = [
+            'content' => $request->content,
+        ];
+
+        $rules = [
+            'content' => 'required',
+        ];
+        $messages = [
+            'content.required' => '请输入评论',
+        ];
+        $validator = Validator::make($data, $rules, $messages);
+
+        if ($validator->fails()) {
+            return $this->error($validator->errors()->first(), null, true);
+        }
+        $user = \Auth::user();
+
+        $model->comment()->create([
+            'content' => $data['content'],
+            'user_id' => $user->id,
+            'parent_id' => $request->parent_id ?: 0,
+            'reply_id' => $request->reply_id ?: 0,
+        ]);
+
+        return $this->success('评论成功');
     }
 
     /**
@@ -141,6 +199,19 @@ class MainController extends InitController
         return $this->success('点赞成功');
     }
 
+    public function goodsCommentsZan(Request $request,Comment $model = null){
+        $user = \Auth::user();
+
+        if($has = $model->zan()->where('user_id',$user['id'])->first()){
+            $has->delete();
+        }else{
+            $model->zan()->create([
+                'user_id' => \Auth::user()->id
+            ]);
+        }
+        return $this->success('点赞成功');
+    }
+
     /**
      * @param Request $request
      * @param int $type
@@ -149,8 +220,57 @@ class MainController extends InitController
      */
     public function appoint(Request $request,$type = 1){
 
+        $data = [
+            'name' => $request->name ?? '',
+            'mobile' => $request->mobile ?? '',
+            'content' => $request->content ?? '',
+        ];
+        $data = $data + ($type == 1 ? [
+                'code' => $request->code ?? '',
+            ]:[]);
+
+        $rules = [
+            'name' => 'required',
+            'mobile' => 'required',
+            'content' => 'required',
+        ];
+        $rules = $rules + ($type == 1 ? [
+            'code' => 'required',
+        ]:[]);
+
+        $messages = [
+            'name.required' => '请输入姓名',
+            'mobile.required' => '请输入手机号',
+        ];
+        $messages = $messages + ($type == 1 ? [
+            'content.required' => '请输入年级',
+            'code.required' => '请输入验证码',
+        ]:[
+            'content.required' => '请输入评论',
+        ]);
+
+        $validator = Validator::make($data, $rules, $messages);
+
+        if ($validator->fails()) {
+            return $this->error($validator->errors()->first(), null, true);
+        }
+
+        if(isset($data['code']) && !$log = UserCode::where([
+            'mobile' => $data['mobile'],
+            'code' => $data['code'],
+            'status' => 1,
+        ])->first()){
+            return $this->error('验证码错误');
+        }
+
+        Appoint::saveBy([
+            'type' => $type,
+            'name' => $data['name'],
+            'mobile' => $data['mobile'],
+            'school_id' => $request->sid ?? 0,
+            'content' => $data['content'],
+        ]);
 
         return $this->success('提交成功');
     }
-
 }

@@ -99,8 +99,8 @@
                     <div class="form-group">
                         <label class="col-xs-2 t_r">支付方式：</label>
                         <div class="col-xs-4">
-                            <label class="mr20"><input type="radio" name="data[pay]"  @if(!isset($model['pay']) || $model['pay'] == 1) checked @endif value="1">免费</label>
-                            <label class="mr20"><input type="radio" name="data[pay]" @if(isset($model['pay']) && $model['pay'] == 2) checked @endif value="2">微信支付</label>
+                            <label class="mr20"><input type="radio" name="data[pay]"  @if(!isset($model['pay']) || $model['pay'] == 2) checked @endif value="2">免费</label>
+                            <label class="mr20"><input type="radio" name="data[pay]" @if(isset($model['pay']) && $model['pay'] == 1) checked @endif value="1">微信支付</label>
                         </div>
                     </div>
                     <div class="form-group">

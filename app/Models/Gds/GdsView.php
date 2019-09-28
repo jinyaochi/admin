@@ -13,6 +13,9 @@ use App\Models\Model;
 
 class GdsView extends Model
 {
+    protected $fillable = [
+        'user_id'
+    ];
     public function gds_views()
     {
         return $this->morphTo();

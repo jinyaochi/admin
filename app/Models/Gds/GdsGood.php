@@ -8,6 +8,7 @@
 
 namespace App\Models\Gds;
 
+use App\Models\Comment;
 use App\Models\Model;
 use App\Models\Ord\OrdOrder;
 use App\Models\System\SysCategory;

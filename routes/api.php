@@ -26,16 +26,20 @@ Route::post('send/code', 'LoginController@code');
 
 Route::post('index', 'MainController@index');
 Route::post('category', 'MainController@category');
+Route::post('category/{model}', 'MainController@categoryGoods');
 Route::post('school', 'MainController@school');
 Route::post('school/show/{model}', 'MainController@schoolShow');
 Route::post('school/comments/{model}', 'MainController@schoolComments')->where(['model' => '[\d]+']);
+Route::post('goods/comments/{model}', 'MainController@goodsComments')->where(['model' => '[\d]+']);
 
 Route::post('goods/{model}','MainController@goods');
 Route::post('appoint/{type}','MainController@appoint');
 
 Route::group(['middleware' => ['jwt.auth']], function () {
     Route::post('school/comments/{model}/create', 'MainController@schoolCommentsCreate')->where(['model' => '[\d]+']);
+    Route::post('goods/comments/{model}/create', 'MainController@goodsCommentsCreate')->where(['model' => '[\d]+']);
     Route::post('school/comments/{model}/zan', 'MainController@schoolCommentsZan')->where(['model' => '[\d]+']);
+    Route::post('goods/comments/{model}/zan', 'MainController@goodsCommentsZan')->where(['model' => '[\d]+']);
 
 
 });

@@ -26,11 +26,18 @@ class GdsGood extends Base
             'id' => $this->id ?? 0,
             'name' => $this->name ?? '',
             'price' => $this->price ?? '',
+            'pay' => ($this->pay == 2 || $this->price==0) ? '免费' : '',
             'video' => explode('?',$this->url)[0],
             'intro' => $this->intro ?? '暂无简介',
             'cover' => $this->image ?? '',
             'collect' => $this->collect()->count() ?? '',
+            'selfcollect' => $this->collect()->where([
+                    'user_id' => \Auth::guard(config('app.guard.api'))->user()->id ?? 0
+                ])->count(),
             'zan' => $this->zan()->count() ?? '',
+            'selfzan' => $this->zan()->where([
+                'user_id' => \Auth::guard(config('app.guard.api'))->user()->id ?? 0
+            ])->count(),
             'view' => $this->view()->count() ?? '',
             'viewer' => UserRescource::collection($this->viewer()->take(3)->get()),
         ];

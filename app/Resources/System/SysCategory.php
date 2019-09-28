@@ -9,9 +9,15 @@
 namespace App\Resources\System;
 
 use App\Resources\Base;
+use App\Resources\Gds\GdsGood;
 
 class SysCategory extends Base
 {
+
+    public function __construct($resource, $hasGoods = false) {
+        parent::__construct($resource);
+        $this->hasGoods = $hasGoods;
+    }
     /**
      * Transform the resource into an array.
      *
@@ -26,6 +32,10 @@ class SysCategory extends Base
             'collect' => $this->collect()->count() ?? '',
             'view' => $this->view()->count() ?? '',
             'zan' => $this->zan()->count() ?? '',
+            'goods' => $this->when($this->hasGoods,function (){
+                return GdsGood::collection($this->goods);
+            }),
+            'price' => $this->goods()->where('type',1)->sum('price')/100
         ];
     }
 }
