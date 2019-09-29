@@ -41,7 +41,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getCoverAttribute()
     {
-        return $this->avatar ?: env('APP_URL').'/static/images/default.png';
+        return $this->avatar ?: env('APP_URL').'/static/images/my-head2.jpg';
     }
 
     /**

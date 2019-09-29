@@ -49,7 +49,8 @@ class LoginController extends InitController{
 
         //登陆（注册）
         $user = User::firstOrCreate(['mobile' => $data['mobile']], [
-            'type' => User::USER_TYPE_MEMBER
+            'type' => User::USER_TYPE_MEMBER,
+            'member_id' => $request->member ?? 0
         ]);
         $token = \JWTAuth::fromUser($user);
 
@@ -79,6 +80,7 @@ class LoginController extends InitController{
             'avatar' => $request->detail['avatarUrl'],
             'gender' => $request->detail['gender'],
             'nickname' => $request->detail['nickName'],
+            'member_id' => $request->member ?? 0
         ]);
 
         $token = \JWTAuth::fromUser($user);
