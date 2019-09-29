@@ -21,7 +21,7 @@ trait MiniProgramTrait
      * @param bool $isPayment
      * @return \EasyWeChat\MiniProgram\Application|\EasyWeChat\Payment\Application
      */
-    public function miniInit($isPayment = false,$appid = null)
+    public function miniInit()
     {
         $config = config('wechat.mini_program.default');
         $app = Factory::miniProgram($config);
@@ -191,11 +191,11 @@ trait MiniProgramTrait
      * @throws Exception
      * 获取小程序太阳码
      */
-    private function getMiniCode($scene, $path, $width = 430,$appid = null)
+    private function getMiniCode($scene, $path, $width = 430)
     {
         try{
-            $filePath = get_upload_base_path('mini_'.$appid);
-            $response = $this->miniInit(false,$appid)->app_code
+            $filePath = get_upload_base_path('mini_code');
+            $response = $this->miniInit()->app_code
                 ->getUnlimit($scene, ['page' => $path, 'width' => $width]);
             if($response instanceof \EasyWeChat\Kernel\Http\StreamResponse){
                 return get_upload_url($filePath).$response->save($filePath);

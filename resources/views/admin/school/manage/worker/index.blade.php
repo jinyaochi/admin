@@ -54,7 +54,7 @@
                                     <td>{{$lv['mobile'] ?? ' -- '}}</td>
                                     <td>{{$lv->school->name ?? ''}}</td>
                                     <td>{{$lv->myuser()->count() ?? '0'}}</td>
-                                    <td>code</td>
+                                    <td><img style="width: 100px;" src="{{$lv->change_code}}" /></td>
                                     <td>
                                         <a class="do_action" data-confirm="确定要删除吗？" data-url="{!! url('member/manage/user/remove',['user'=>$lv['id']]) !!}">删除</a>
                                     </td>

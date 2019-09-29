@@ -103,10 +103,14 @@ class User extends Authenticatable implements JWTSubject
     {
         try{
             $key = 'member_code_mini_id_'.$this->id;
-            $appid = env('MALL_APPID');
 
-            $scene = 'uid='.$this->id;
-            $url = env('APP_API_URL').$this->getMiniCode($scene, 'pages/index/main',430,$appid);
+            if(\Cache::has($key)){
+                $url = \Cache::get($key);
+            }else{
+                $scene = 'uid='.$this->id;
+                $url = env('APP_API_URL').$this->getMiniCode($scene, 'pages/index/index');
+                \Cache::forever($key,$url);
+            }
 
             return $url;
         }catch(\Exception $ex){

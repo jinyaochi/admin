@@ -24,12 +24,6 @@ if(!function_exists('get_upload_base_path')){
     function get_upload_base_path($guard = 'admin')
     {
         $directory = $guard.DIRECTORY_SEPARATOR;
-        if($guard=='admin'){
-            $directory .= auth($guard)->user()['id'].DIRECTORY_SEPARATOR;
-        }
-        if($guard=='tenant'){
-            $directory .= auth($guard)->user()['tenant_id'].DIRECTORY_SEPARATOR;
-        }
         $directory .= date('Y').DIRECTORY_SEPARATOR.date('m').DIRECTORY_SEPARATOR.date('d').DIRECTORY_SEPARATOR;
         $realPath = storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.$directory);
         check_dir($realPath);
@@ -77,5 +71,19 @@ if(!function_exists('get_real_distance')){
         $calculatedDistance = $earthRadius*$stepTwo;
 
         return number_format(sprintf("%.2f", $calculatedDistance/1000), 1);
+    }
+}
+
+/**
+ * 上传图片url地址
+ */
+if(!function_exists('get_upload_url')){
+    function get_upload_url($realpath)
+    {
+        $path = str_replace('\\', '/', str_replace(storage_path(), '', $realpath));
+        if(preg_match('#app\/public#', $path)){
+            return '/storage'.str_replace('/app/public', '', $path);
+        }
+        return $path;
     }
 }
