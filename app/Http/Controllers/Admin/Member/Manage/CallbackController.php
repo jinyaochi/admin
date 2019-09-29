@@ -8,7 +8,8 @@
 
 namespace App\Http\Controllers\Admin\Member\Manage;
 
-use App\Models\User\UserCallback;
+use App\Models\Appoint;
+use App\Models\School;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\InitController;
@@ -22,12 +23,23 @@ class CallbackController extends InitController
 
     public function index(Request $request){
 
-        $lists = UserCallback::orderBy('id','DESC')->paginate(self::PAGESIZE);
+        $start = $request->start ?? '';
+        $end = $request->end ?? '';
+
+        $lists = Appoint::where('type',2)->where(function ($query)use($start,$end){
+            $start && $query->where('created_at','>',$start);
+            $end && $query->where('created_at','<',$end);
+        })->orderBy('id','DESC')->paginate(self::PAGESIZE);
+
         return view( $this->template. __FUNCTION__,compact('lists'));
     }
 
-    public function info(Request $request,UserCallback $model = null){
-        return view( $this->template. __FUNCTION__,compact('model'));
+    public function remove(Request $request,Appoint $model = null){
+
+        $model->delete();
+
+        return $this->success('操作成功',url('member/manage/message'));
+
     }
 
 }

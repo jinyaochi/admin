@@ -10,8 +10,6 @@ namespace App\Http\Controllers\Admin\Member\Manage;
 
 use App\Models\Appoint;
 use App\Models\School;
-use App\Models\User\UserCallback;
-use App\Models\User\UserMessage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\InitController;

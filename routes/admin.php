@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
                 Route::get('user/{operate}/{model}', ['as' => 'user.operate', 'uses' => 'UserController@operate']);
                 Route::get('callback', ['as' => 'callback', 'uses' => 'CallbackController@index']);
                 Route::get('callback/{model}', ['as' => 'callback.info', 'uses' => 'CallbackController@info']);
+                Route::get('callback/remove/{model}', ['as' => 'callback.remove', 'uses' => 'CallbackController@remove']);
                 Route::get('message', ['as' => 'message', 'uses' => 'MessageController@index']);
                 Route::get('message/remove/{model}', ['as' => 'message.remove', 'uses' => 'MessageController@remove']);
                 Route::get('message/change/{model}', ['as' => 'message.change', 'uses' => 'MessageController@change']);
