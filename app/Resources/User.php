@@ -18,6 +18,7 @@ class User extends Base
             'cover' => $this->cover ?? '',
             'nickname' => $this->show_name ?? '',
             'mobile' => $this->mobile ?? '',
+            'minicode' => $this->type & \App\Models\User::USER_TYPE_STAFF ? env('APP_URL').$this->change_code : '',
         ];
     }
 }

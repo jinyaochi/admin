@@ -46,6 +46,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($exception instanceof \Tymon\JWTAuth\Exceptions\JWTException){
+            return response()->json([ 'message' => '未登录' ,'status' => 0], 200);
+        }
         return parent::render($request, $exception);
     }
 }
