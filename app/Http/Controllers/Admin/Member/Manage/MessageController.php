@@ -8,6 +8,8 @@
 
 namespace App\Http\Controllers\Admin\Member\Manage;
 
+use App\Models\Appoint;
+use App\Models\School;
 use App\Models\User\UserCallback;
 use App\Models\User\UserMessage;
 use Illuminate\Support\Facades\Validator;
@@ -22,22 +24,33 @@ class MessageController extends InitController
     }
 
     public function index(Request $request){
+        $schoolid = $request->school ?? '';
+        $start = $request->start ?? '';
+        $end = $request->end ?? '';
+        $lists = Appoint::where('type',1)->where(function ($query)use($schoolid,$start,$end){
+            $schoolid && $query->where('school_id',$schoolid);
+            $start && $query->where('created_at','>',$start);
+            $end && $query->where('created_at','<',$end);
+        })->orderBy('id','DESC')->paginate(self::PAGESIZE);
+        $school = School::all();
 
-        $lists = UserMessage::orderBy('id','DESC')->paginate(self::PAGESIZE);
-        return view( $this->template. __FUNCTION__,compact('lists'));
+        return view( $this->template. __FUNCTION__,compact('lists','school'));
     }
 
-    public function create(Request $request,UserCallback $model = null){
+    public function remove(Request $request,Appoint $model = null){
 
-        if(!$request->message){
-            return $this->error('缺少内容',url('member/manage/message'));
-        }
-        UserMessage::saveBy([
-            'type' => 3,
-            'content' => $request->message,
-            'item_id' => $request->item_id,
-        ]);
+        $model->delete();
 
+        return $this->success('操作成功',url('member/manage/message'));
+
+    }
+
+    public function change(Request $request,Appoint $model = null){
+
+        $sid = $request->sid ?? 0;
+
+        $model->school_id = $sid;
+        $model->save();
         return $this->success('操作成功',url('member/manage/message'));
 
     }

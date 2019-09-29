@@ -30,7 +30,8 @@ Route::group(['middleware' => ['auth:admin']], function () {
                 Route::get('callback', ['as' => 'callback', 'uses' => 'CallbackController@index']);
                 Route::get('callback/{model}', ['as' => 'callback.info', 'uses' => 'CallbackController@info']);
                 Route::get('message', ['as' => 'message', 'uses' => 'MessageController@index']);
-                Route::post('message/create', ['as' => 'message.create', 'uses' => 'MessageController@create']);
+                Route::get('message/remove/{model}', ['as' => 'message.remove', 'uses' => 'MessageController@remove']);
+                Route::get('message/change/{model}', ['as' => 'message.change', 'uses' => 'MessageController@change']);
             });
         });
 

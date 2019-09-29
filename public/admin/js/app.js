@@ -112,6 +112,6 @@ define(function(require, exports, module) {
         });
         $('.base_form').ajaxForm(options);
 
-        ajaxaction.on($("a.do_action"))
+        ajaxaction.on($("a.do_action,li.do_action"))
     }
 });
