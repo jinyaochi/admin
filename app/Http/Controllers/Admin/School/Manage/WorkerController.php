@@ -26,6 +26,7 @@ class WorkerController extends InitController
 
         $lists = User::where(function ($query)use($schoolid){
             $query->where('schoole_id',$schoolid);
+            $query->where('status' , User::USER_STATUS_OPEN);
             $query->where('type','&',User::USER_TYPE_STAFF);
         })->orderBy('id','DESC')->get();
 

@@ -20,9 +20,9 @@
                                 <input type="text" name="name" placeholder="用户名/手机号/评论内容" class="form-control w260" value="{{request('name')}}">
                             </div>
                             <div class="c-datepicker-date-editor J-datepicker-range-day">
-                                <input placeholder="注册时间开始日期" name="start" class="c-datepicker-data-input only-date" value="{{request('start')}}" readonly>
+                                <input placeholder="评论时间开始日期" name="start" class="c-datepicker-data-input only-date" value="{{request('start')}}" readonly>
                                 <span class="c-datepicker-range-separator">-</span>
-                                <input placeholder="注册时间结束日期" name="end" class="c-datepicker-data-input only-date" value="{{request('end')}}" readonly>
+                                <input placeholder="评论时间结束日期" name="end" class="c-datepicker-data-input only-date" value="{{request('end')}}" readonly>
                             </div>
                         </div>
                         <input type="submit" value="搜索" class="fl btn ml10 js_submit">
@@ -37,7 +37,7 @@
                             <tr>
                                 <th  style="width: 15%">用户名</th>
                                 <th  style="width: 15%">手机号</th>
-                                <th  style="width: 15%">视频名称</th>
+                                <th  style="width: 15%">视频/校区名称</th>
                                 <th  >评论内容</th>
                                 <th  style="width: 15%">发布时间</th>
                                 <th  style="width: 15%">操作</th>
@@ -46,9 +46,9 @@
                             <tbody>
                             @forelse($lists as $lv)
                                 <tr>
-                                    <td>{{$lv->user->nickname ?? ''}}</td>
-                                    <td>{{$lv->user->mobile ?? ''}}</td>
-                                    <td>{{$lv->goods->name ?? ''}}</td>
+                                    <td>{{$lv->user->nickname ?? '--'}}</td>
+                                    <td>{{$lv->user->mobile ?? '--'}}</td>
+                                    <td>{{$lv->model->name ?? ''}}</td>
                                     <td>{{$lv->content ?? ''}}</td>
                                     <td>{{$lv->created_at ?? ''}}</td>
                                     <td>

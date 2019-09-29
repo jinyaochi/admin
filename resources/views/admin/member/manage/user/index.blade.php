@@ -54,9 +54,11 @@
                             <tr>
                                 <th  style="width: 8%">ID</th>
                                 <th  style="width: 12%">状态</th>
-                                <th  style="width: 15%">手机号</th>
+                                <th  style="width: 10%">手机号</th>
                                 <th  style="width: 15%">昵称</th>
-                                <th  style="width: 25%">注册时间</th>
+                                <th  style="width: 15%">注册时间</th>
+                                <th  style="width: 15%">校区</th>
+                                <th  style="width: 15%">业务员</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -68,6 +70,8 @@
                                     <td>{{$lv['mobile'] ?? ' -- '}}</td>
                                     <td>{{$lv['nickname'] ?? ' -- '}}</td>
                                     <td>{{$lv['created_at'] ?? ' -- '}}</td>
+                                    <td>{{$lv->school->name ?? ' -- '}}</td>
+                                    <td>{{$lv->member->name ?? ' -- '}}</td>
                                     <td>
                                         @if($lv['status'] != \App\Models\User::USER_STATUS_STOP)
                                             <a class="do_action" data-confirm="确定要冻结吗？" data-url="{!! url('member/manage/user/close',['user'=>$lv['id']]) !!}">冻结</a>

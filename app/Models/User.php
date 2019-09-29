@@ -120,4 +120,24 @@ class User extends Authenticatable implements JWTSubject
     public function school(){
         return $this->belongsTo(School::class,'schoole_id');
     }
+
+    /**
+     * 业务员
+     */
+    public function member(){
+        return $this->belongsTo(User::class,'member_id');
+    }
+
+    /**
+     * 业务员拉新数
+     */
+    public function myuser(){
+        $start = request('start') ?? '';
+        $end = request('end') ?? '';
+
+        return $this->hasMany(User::class,'member_id')->where(function ($query)use($start,$end){
+            $start && $query->where('created_at','>',$start);
+            $end && $query->where('created_at','<',$end);
+        });
+    }
 }

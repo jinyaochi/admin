@@ -27,10 +27,11 @@ class UserController extends InitController
         $name = $request->name ?? '';
         $schoolid = $request->school ?? '';
         $workerid = $request->worker ?? '';
-        $lists = User::whereRaw('type & '.User::USER_TYPE_MEMBER)->where(function ($query)use($name,$schoolid,$workerid){
+        $lists = User::whereRaw('type & '.User::USER_TYPE_MEMBER)->where(function ($query)use($name){
             $name && $query->where('id',$name)->orWhere('mobile',$name);
-            $schoolid && $query->where('schoole_id',$name);
-            $workerid && $query->where('member_id',$name);
+        })->where(function ($query)use($schoolid,$workerid){
+            $schoolid && $query->where('schoole_id',$schoolid);
+            $workerid && $query->where('member_id',$workerid);
         })->whereIn('status',[User::USER_STATUS_OPEN,User::USER_STATUS_STOP])->orderBy('id','DESC')->paginate(self::PAGESIZE);
 
         if($request->excel){

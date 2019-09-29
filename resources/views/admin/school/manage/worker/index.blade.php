@@ -17,7 +17,14 @@
                 <div class="form-horizontal goods_nav_search clearfix">
                     <form method="get" name="search">
                         <div class="fl ml10 mr20 pos_rel">
-                            <input type="text" name="name" placeholder="姓名/手机号" class="form-control w260" value="{{request('name')}}">
+                            <div class="fl ml10 mr20 pos_rel">
+                                <input type="text" name="name" placeholder="姓名/手机号" class="form-control w260" value="{{request('name')}}">
+                            </div>
+                            <div class="c-datepicker-date-editor J-datepicker-range-day">
+                                <input placeholder="拉新排名开始日期" name="start" class="c-datepicker-data-input only-date" value="{{request('start')}}" readonly>
+                                <span class="c-datepicker-range-separator">-</span>
+                                <input placeholder="拉新排名结束日期" name="end" class="c-datepicker-data-input only-date" value="{{request('end')}}" readonly>
+                            </div>
                         </div>
                         <input type="submit" value="搜索" class="fl btn ml10 js_submit">
                     </form>
@@ -34,8 +41,8 @@
                                 <th  style="width: 5%">姓名</th>
                                 <th  style="width: 10%">手机号</th>
                                 <th  style="width: 12%">校区</th>
-                                <th  style="width: 15%">昵称</th>
-                                <th  style="width: 15%">头像</th>
+                                <th  style="width: 15%">拉新数</th>
+                                <th  style="width: 15%">二维码</th>
                                 <th  style="width: 10%">操作</th>
                             </tr>
                             </thead>
@@ -46,8 +53,8 @@
                                     <td>{{$lv['name'] ?? ''}}</td>
                                     <td>{{$lv['mobile'] ?? ' -- '}}</td>
                                     <td>{{$lv->school->name ?? ''}}</td>
-                                    <td>{{$lv['nickname'] ?? ' -- '}}</td>
-                                    <td>@if($lv['avatar'])<img src="{{$lv['avatar'] ?? ' -- '}}" style="width: 50px; height: 50px;" />@endif</td>
+                                    <td>{{$lv->myuser()->count() ?? '0'}}</td>
+                                    <td>code</td>
                                     <td>
                                         <a class="do_action" data-confirm="确定要删除吗？" data-url="{!! url('member/manage/user/remove',['user'=>$lv['id']]) !!}">删除</a>
                                     </td>
@@ -75,6 +82,7 @@
         var __seajs_debug = 1;
         seajs.use("/admin/js/app.js", function (app) {
             app.bootstrap();
+            app.load('core/date');
         });
 
     </script>
