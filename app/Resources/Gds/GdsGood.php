@@ -26,7 +26,7 @@ class GdsGood extends Base
             'id' => $this->id ?? 0,
             'name' => $this->name ?? '',
             'price' => $this->price ?? '',
-            'pay' => ($this->pay == 2 || $this->price==0) ? '免费' : '',
+            'pay' => ($this->pay == 2 || $this->price==0) ? '免费' : '付费',
             'video' => explode('?',$this->url)[0],
             'intro' => $this->intro ?? '暂无简介',
             'cover' => $this->image ?? '',
