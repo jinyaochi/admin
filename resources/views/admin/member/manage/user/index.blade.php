@@ -70,7 +70,7 @@
                                     <td>{{$lv['mobile'] ?? ' -- '}}</td>
                                     <td>{{$lv['nickname'] ?? ' -- '}}</td>
                                     <td>{{$lv['created_at'] ?? ' -- '}}</td>
-                                    <td>{{$lv->school->name ?? ' -- '}}</td>
+                                    <td>{{$lv->member->school->name ?? ' -- '}}</td>
                                     <td>{{$lv->member->name ?? ' -- '}}</td>
                                     <td>
                                         @if($lv['status'] != \App\Models\User::USER_STATUS_STOP)

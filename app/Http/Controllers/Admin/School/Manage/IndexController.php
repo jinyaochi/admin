@@ -25,8 +25,12 @@ class IndexController extends InitController
     public function index(Request $request){
 
         $name = $request->name ?? '';
-        $lists = School::where(function ($query)use($name){
+
+        $adminSchoolId = \Auth::user()->schoole_id ?? 0;
+
+        $lists = School::where(function ($query)use($name,$adminSchoolId){
             $name && $query->where('name','like',"%{$name}%");
+            $adminSchoolId && $query->where('id',$adminSchoolId);
         })->orderBy('id','DESC')->paginate(self::PAGESIZE);
 
         return view( $this->template. __FUNCTION__,compact('lists'));
@@ -99,7 +103,10 @@ class IndexController extends InitController
                 }
 
                 $admin['pwd'] != '******' && $adminInfo->password = \Hash::make($admin['pwd']);
+                $adminInfo->schoole_id = $model['id'];
                 $adminInfo->save();
+
+                $adminInfo->assignRole(['school']);
             }
 
             $data['user_id'] = $admin['userid'];

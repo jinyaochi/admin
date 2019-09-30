@@ -29,7 +29,7 @@ class User extends Authenticatable implements JWTSubject
     const USER_TYPE_MEMBER = 8;
 
     protected $appends = ['change_code','cover','show_name'];
-
+    protected $guard_name = 'admin';
     /**
      * The attributes that are mass assignable.
      *

@@ -21,7 +21,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/', 'HomeController@index');
     Route::get('logout', 'LoginController@logout');
 
-    Route::group(['middleware' => 'permission:'.config('app.guard.admin')], function () {
+//    Route::group(['middleware' => 'permission:'.config('app.guard.admin')], function () {
 
         Route::group(['prefix' => 'member', 'as' => 'member.', 'namespace' => 'Member'], function(){
             Route::group(['prefix' => 'manage', 'as' => 'manage.', 'namespace' => 'Manage'], function(){
@@ -103,7 +103,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
 
         });
 
-    });
+//    });
 
 });
 

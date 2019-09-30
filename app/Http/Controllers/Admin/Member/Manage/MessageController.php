@@ -25,10 +25,14 @@ class MessageController extends InitController
         $schoolid = $request->school ?? '';
         $start = $request->start ?? '';
         $end = $request->end ?? '';
-        $lists = Appoint::where('type',1)->where(function ($query)use($schoolid,$start,$end){
+
+        $adminSchoolId = \Auth::user()->schoole_id ?? 0;
+
+        $lists = Appoint::where('type',1)->where(function ($query)use($schoolid,$start,$end,$adminSchoolId){
             $schoolid && $query->where('school_id',$schoolid);
             $start && $query->where('created_at','>',$start);
             $end && $query->where('created_at','<',$end);
+            $adminSchoolId && $query->where('school_id',$adminSchoolId);
         })->orderBy('id','DESC')->paginate(self::PAGESIZE);
         $school = School::all();
 
