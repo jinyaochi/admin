@@ -38,7 +38,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Wxpay\\": "packages/wxpay/"
         },
         "classmap": [
             "database/seeds",

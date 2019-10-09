@@ -38,9 +38,9 @@ class MainController extends InitController
         $serial = time().$user['id'];
         $price = $category->goods()->where('pay',1)->sum('price');
 
-        if(!($price > 0)){
-            return $this->error('订单金额为零');
-        }
+//        if(!($price > 0)){
+//            return $this->error('订单金额为零');
+//        }
 
         try{
             DB::beginTransaction();
@@ -63,14 +63,14 @@ class MainController extends InitController
                 'category_id' => $category['id'],
             ]);
             //请求支付参数
-
+            $app = new \Wxpay\UnifiedOrder_pub();
+            $app->getAppParameters();
 
             DB::commit();
             return $this->success('下单成功',null,[]);
         } catch(\Exception $ex) {
             DB::rollback();
-            error(__CLASS__ . ' | ' . __FUNCTION__ . ' | ' . $ex->getFile() . ' | ' . $ex->getLine() . ' | error = ' . $ex->getMessage());
-            return $this->error('下单失败');
+            return $this->error('下单失败'.$ex->getMessage());
         }
 
     }
