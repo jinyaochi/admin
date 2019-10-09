@@ -35,7 +35,7 @@ class SysCategory extends Base
             'goods' => $this->when($this->hasGoods,function (){
                 return GdsGood::collection($this->goods);
             }),
-            'price' => $this->goods()->where('type',1)->sum('price')/100
+            'price' => $this->goods()->where('pay',1)->sum('price')/100
         ];
     }
 }

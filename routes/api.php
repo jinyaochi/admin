@@ -43,8 +43,10 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::post('goods/collect/{model}', 'MainController@goodsCollect')->where(['model' => '[\d]+']);
     Route::post('goods/zan/{model}', 'MainController@goodsZan')->where(['model' => '[\d]+']);
 
-    Route::post('mycollect', 'MainController@mycollect')->where(['model' => '[\d]+']);
-    Route::post('mybuy', 'MainController@mybuy')->where(['model' => '[\d]+']);
+    Route::post('mycollect', 'MainController@mycollect');
+    Route::post('mybuy', 'MainController@mybuy');
+
+    Route::post('mkorder/{category}', 'MainController@mkorder');
 
 
 });

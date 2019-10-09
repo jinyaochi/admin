@@ -8,13 +8,12 @@
 
 namespace App\Models\Ord;
 
-
-use App\Models\Gds\GdsGood;
 use App\Models\Model;
+use App\Models\System\SysCategory;
 
 class OrdOrderItem extends Model
 {
-    public function good(){
-        return $this->belongsTo(GdsGood::class,'spu_id');
+    public function category(){
+        return $this->belongsTo(SysCategory::class,'category_id');
     }
 }

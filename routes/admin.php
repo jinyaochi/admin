@@ -47,16 +47,13 @@ Route::group(['middleware' => ['auth:admin']], function () {
                 Route::get('goods', ['as' => 'goods', 'uses' => 'GoodsController@index']);
                 Route::any('goods/create/{model?}', ['as' => 'goods.create', 'uses' => 'GoodsController@create']);
                 Route::get('goods/delete/{model}', ['as' => 'goods.delete', 'uses' => 'GoodsController@delete']);
-                Route::get('goods/skus/{model}', ['as' => 'goods.skus', 'uses' => 'SkusController@index']);
-                Route::any('goods/skus/{model}/create/{sku?}', ['as' => 'goods.skus.create', 'uses' => 'SkusController@create']);
-                Route::any('goods/skus/delete/{sku?}', ['as' => 'goods.skus.delete', 'uses' => 'SkusController@delete']);
                 Route::get('category', ['as' => 'category', 'uses' => 'CategoryController@index']);
                 Route::any('category/create/{category?}', ['as' => 'category.create', 'uses' => 'CategoryController@create']);
                 Route::any('category/delete/{category?}', ['as' => 'category.delete', 'uses' => 'CategoryController@delete']);
                 Route::get('comment', ['as' => 'comment', 'uses' => 'CommentController@index']);
                 Route::get('comment/delete/{model}', ['as' => 'comment.delete', 'uses' => 'CommentController@delete']);
-                Route::get('class', ['as' => 'class', 'uses' => 'ClassController@index']);
-                Route::any('class/create/{category?}', ['as' => 'class.create', 'uses' => 'ClassController@create']);
+                Route::get('index', ['as' => 'index', 'uses' => 'IndexController@index']);
+                Route::any('index/create/{model?}', ['as' => 'index.create', 'uses' => 'IndexController@create']);
             });
         });
 

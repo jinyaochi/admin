@@ -11,6 +11,8 @@ namespace App\Http\Controllers\Api;
 use App\Models\Appoint;
 use App\Models\Comment;
 use App\Models\Gds\GdsGood;
+use App\Models\Ord\OrdOrder;
+use App\Models\Ord\OrdOrderItem;
 use App\Models\School;
 use App\Models\System\SysCategory;
 use App\Models\User\UserCode;
@@ -24,6 +26,55 @@ use Illuminate\Support\Facades\Validator;
 
 class MainController extends InitController
 {
+    /**
+     * @param Request $request
+     * @param SysCategory|null $category
+     * 下订单
+     */
+    public function mkorder(Request $request, SysCategory $category = null){
+
+        $user = \Auth::user();
+
+        $serial = time().$user['id'];
+        $price = $category->goods()->where('pay',1)->sum('price');
+
+        if(!($price > 0)){
+            return $this->error('订单金额为零');
+        }
+
+        try{
+            DB::beginTransaction();
+
+            //生成订单
+            $order = OrdOrder::saveBy([
+                'serial' => $serial,
+                'user_id' => $user['id'],
+                'mobile' => $user['mobile'],
+                'goods_name' => $category['name'],
+                'pay_type' => 1,
+                'status' => 1,
+                'price' => $price,
+                'name' => $user['nickname'] ?? $user['mobile'],
+            ]);
+
+            //写入购买记录
+            OrdOrderItem::saveBy([
+                'order_id' => $order['id'],
+                'category_id' => $category['id'],
+            ]);
+            //请求支付参数
+
+
+            DB::commit();
+            return $this->success('下单成功',null,[]);
+        } catch(\Exception $ex) {
+            DB::rollback();
+            error(__CLASS__ . ' | ' . __FUNCTION__ . ' | ' . $ex->getFile() . ' | ' . $ex->getLine() . ' | error = ' . $ex->getMessage());
+            return $this->error('下单失败');
+        }
+
+    }
+
     /**
      * @param Request $request
      * @return mixed
@@ -50,8 +101,10 @@ class MainController extends InitController
      */
     public function mybuy(){
         $user = \Auth::user();
-        return GdsGoodRescource::collection(GdsGood::whereHas('order',function ($query)use($user){
-            $query->where('user_id',$user->id);
+        return GdsGoodRescource::collection(GdsGood::whereHas('category',function ($query)use($user){
+            $query->whereHas('order',function ($query)use($user){
+                $query->where('user_id',$user->id);
+            });
         })->get());
     }
 

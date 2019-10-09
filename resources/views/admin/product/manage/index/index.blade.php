@@ -10,8 +10,8 @@
         <div class="admin_info clearfix">
             <!--right bengin-->
             <ul class="nav_pills mb10 clearfix">
-                <a href="{{ url('product/manage/goods') }}"><li class="selected">课程管理</li></a>
-                <a class="btn btn_r" href="{{ url('product/manage/goods/create') }}">+ 创建课程</a>
+                <a href="{{ url('product/manage/index') }}"><li class="selected">课程管理</li></a>
+                <a class="btn btn_r" href="{{ url('product/manage/index/create') }}">+ 创建课程</a>
             </ul>
             <div class="mainbox">
                 <div class="form-horizontal goods_nav_search clearfix">
@@ -30,9 +30,8 @@
                             <thead>
                             <tr>
                                 <th  style="width: 8%">ID</th>
-                                <th  style="width: 15%">所属分类</th>
                                 <th  style="width: 22%">名称</th>
-                                <th  style="width: 22%">简介</th>
+                                <th  >简介</th>
                                 <th  style="width: 10%">价格</th>
                                 <th  style="width: 5%">排序</th>
                                 <th  style="width: 10%">操作</th>
@@ -42,13 +41,12 @@
                             @forelse($lists as $lv)
                                 <tr>
                                     <td>{{$lv['id'] ?? ''}}</td>
-                                    <td>{{$lv['category']['name'] ?? ''}}</td>
                                     <td>{{$lv['name'] ?? ''}}</td>
                                     <td>{{$lv['intro'] ?? ''}}</td>
                                     <td>{{$lv['price'] ?? ''}}</td>
                                     <td>{{$lv['sorts'] ?? ''}}</td>
                                     <td>
-                                        <a href="{!! url('product/manage/goods/create',['id'=>$lv['id']]) !!}">编辑</a>
+                                        <a href="{!! url('product/manage/index/create',['id'=>$lv['id']]) !!}">编辑</a>
                                         <a class="do_action" data-confirm="确定要删除吗？" data-url="{!! url('product/manage/goods/delete',['id'=>$lv['id']]) !!}">删除</a>
                                     </td>
                                 </tr>

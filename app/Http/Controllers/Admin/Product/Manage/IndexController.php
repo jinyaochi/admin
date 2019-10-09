@@ -1,7 +1,12 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: 89340
+ * Date: 2019/4/7
+ * Time: 12:47
+ */
 
 namespace App\Http\Controllers\Admin\Product\Manage;
-
 
 use App\Http\Controllers\Admin\InitController;
 use App\Models\Gds\GdsGood;
@@ -9,15 +14,16 @@ use App\Models\System\SysCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class GoodsController extends InitController
+class IndexController extends InitController
 {
     public function __construct()
     {
-        $this->template = 'admin.product.manage.goods.';
+        $this->template = 'admin.product.manage.index.';
     }
 
     public function delete(GdsGood $model = null){
 
+        $model->skus()->delete();
         $model->delete();
         return $this->success('操作成功');
     }
@@ -26,7 +32,7 @@ class GoodsController extends InitController
         $name = $request->name ?? '';
         $lists = GdsGood::where(function ($query) use ($name){
             $name && $query->where('name',$name)->orWhere('teacher',$name);
-        })->where('is_hot',0)->orderBy('sorts','DESC')->paginate(self::PAGESIZE);
+        })->where('is_hot',1)->orderBy('sorts','DESC')->paginate(self::PAGESIZE);
         return view( $this->template. __FUNCTION__,compact('lists'));
     }
 
@@ -65,9 +71,10 @@ class GoodsController extends InitController
             $data['intro'] || $data['intro'] = '';
             $data['sorts'] || $data['sorts'] = 0;
             GdsGood::saveBy($data);
-            return $this->success('操作成功',url('product/manage/goods'));
+            return $this->success('操作成功',url('product/manage/index'));
         }catch (\Exception $e) {
             return $this->error('操作异常，请联系开发人员'.$e->getMessage());
         }
     }
+
 }

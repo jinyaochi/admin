@@ -15,14 +15,11 @@
                         <input type="hidden" name="data[id]" value="{!! $model['id'] ?? '' !!}">
                     @endif
 
-                    <div class="form-group">
+                    <div class="form-group" hidden>
                         <label class="col-xs-2 t_r"><span class="red">*</span>所属类目：</label>
                         <div class="col-xs-8">
                             <select name="data[category_id]" class="select-change-style w160">
                                 <option value="0">---请选择----</option>
-                                @foreach($categories as $item)
-                                    <option value="{{$item['id']}}" @if($model['category_id'] == $item['id']) selected @endif >{{'|' . str_repeat(' -- ',$item['level'])}}{{$item['name']}}</option>
-                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -106,8 +103,8 @@
                     <div class="form-group" hidden>
                         <label class="col-xs-2 t_r">是否热门：</label>
                         <div class="col-xs-4">
-                            <label class="mr20"><input type="radio" name="data[is_hot]" value="1">是</label>
-                            <label class="mr20"><input type="radio" name="data[is_hot]" checked value="0">否</label>
+                            <label class="mr20"><input type="radio" name="data[is_hot]" checked value="1">是</label>
+                            <label class="mr20"><input type="radio" name="data[is_hot]" value="0">否</label>
                         </div>
                     </div>
                     <div class="form-group">

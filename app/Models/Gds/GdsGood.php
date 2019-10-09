@@ -22,10 +22,6 @@ class GdsGood extends Model
         return $this->belongsTo(SysCategory::class,'category_id');
     }
 
-    public function order(){
-        return $this->belongsToMany(OrdOrder::class,'ord_order_items','spu_id','order_id');
-    }
-
     public function comment(){
         return $this->morphMany(Comment::class, 'model');
     }

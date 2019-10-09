@@ -8,6 +8,7 @@ use App\Models\Gds\GdsGood;
 use App\Models\Gds\GdsView;
 use App\Models\Gds\GdsZan;
 use App\Models\Model;
+use App\Models\Ord\OrdOrder;
 use Illuminate\Database\Eloquent\Builder;
 
 class SysCategory extends Model
@@ -48,8 +49,12 @@ class SysCategory extends Model
         return $collection->buildTree('parent_id', 'node');
     }
 
+    public function order(){
+        return $this->belongsToMany(OrdOrder::class,'ord_order_items','category_id','order_id');
+    }
+
     public function goods(){
-        return $this->hasMany(GdsGood::class,'category_id');
+        return $this->hasMany(GdsGood::class,'category_id')->orderBy('sorts','DESC');
     }
 
     public function collect(){
