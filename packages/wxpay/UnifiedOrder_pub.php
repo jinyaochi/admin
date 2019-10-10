@@ -31,6 +31,7 @@ class UnifiedOrder_pub extends Wxpay_client_pub
 
         $this->parameters["appid"] = WxPayConf_pub::DCAPPID;//公众账号ID
         $this->parameters["mch_id"] = WxPayConf_pub::DCMCHID;//商户号
+        $this->parameters["wx_appid"] = env('MALL_APPID');
         $this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
 		$this->parameters["spbill_create_ip"] = $_SERVER['REMOTE_ADDR']; //终端ip
         $this->parameters["sign"] = $this->getSign($this->parameters, WxPayConf_pub::DCKEY);//签名

@@ -64,12 +64,23 @@ class MainController extends InitController
             ]);
             //请求支付参数
             $app = new \Wxpay\UnifiedOrder_pub();
-            $app->getAppParameters();
+            $app->setParameter('method','mbupay.wxpay.jsapi');
+            $app->setParameter('body','能动视频');
+            $app->setParameter('out_trade_no',$serial);
+            $app->setParameter('total_fee',1);
+            $app->setParameter('openid',$user['openid'] ?? 'oVem45adOxAnAbV52iAzd-fvaPmM');
+            $app->setParameter('notify_url',env('APP_URL').'/notify');
+            $app->setParameter('is_minipg',1);
+
+            $res = $app->getAppParameters();
 
             DB::commit();
-            return $this->success('下单成功',null,[]);
+            return $this->success('下单成功',null,$res);
         } catch(\Exception $ex) {
             DB::rollback();
+
+            info(__CLASS__ . ' | ' . __FUNCTION__ . ' | ' . $ex->getFile() . ' | ' . $ex->getLine() . ' | error = ' . $ex->getMessage());
+
             return $this->error('下单失败'.$ex->getMessage());
         }
 
