@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Ord\OrdOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +18,15 @@ class NotifyController extends InitController
 
         $options = file_get_contents('php://input');
         $options = (array)simplexml_load_string($options, 'SimpleXMLElement', LIBXML_NOCDATA);
-        info($options);
+
+        $orderInfo = OrdOrder::where('serial',$options['out_trade_no'])->first();
+
+        if($orderInfo){
+            $orderInfo->status = 5;
+            $orderInfo->payed_at = date('Y-m-d H:i:s');
+            $orderInfo->save();
+        }
+
         exit('success');
     }
 }

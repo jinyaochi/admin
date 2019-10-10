@@ -38,9 +38,9 @@ class MainController extends InitController
         $serial = time().$user['id'];
         $price = $category->goods()->where('pay',1)->sum('price');
 
-//        if(!($price > 0)){
-//            return $this->error('订单金额为零');
-//        }
+        if(!($price > 0)){
+            return $this->error('订单金额为零');
+        }
 
         try{
             DB::beginTransaction();
@@ -115,6 +115,7 @@ class MainController extends InitController
         return GdsGoodRescource::collection(GdsGood::whereHas('category',function ($query)use($user){
             $query->whereHas('order',function ($query)use($user){
                 $query->where('user_id',$user->id);
+                $query->where('status',5);
             });
         })->get());
     }
