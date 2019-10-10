@@ -147,8 +147,9 @@ class MainController extends InitController
     public function goods(Request $request,GdsGood $model = null){
 
         //增加浏览量
-        $model->view()->create([
-            'user_id' => \Auth::guard(config('app.guard.api'))->user()->id ?? 0
+        $userid = \Auth::guard(config('app.guard.api'))->user()->id ?? 0;
+        $userid && $model->view()->create([
+            'user_id' => $userid
         ]);
         return new GdsGoodRescource($model);
     }

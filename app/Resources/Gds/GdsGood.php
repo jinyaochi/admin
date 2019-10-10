@@ -39,7 +39,7 @@ class GdsGood extends Base
                 'user_id' => \Auth::guard(config('app.guard.api'))->user()->id ?? 0
             ])->count(),
             'view' => $this->view()->count() ?? '',
-            'viewer' => UserRescource::collection($this->viewer()->take(3)->get()),
+            'viewer' => UserRescource::collection($this->viewer()->take($request->num ?? 3)->get()),
         ];
     }
 

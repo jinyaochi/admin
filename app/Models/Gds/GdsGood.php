@@ -36,7 +36,7 @@ class GdsGood extends Model
     }
     public function viewer()
     {
-        return $this->morphToMany(User::class, 'gds_views');
+        return $this->morphToMany(User::class, 'gds_views')->orderBy('gds_views.id','DESC');
     }
     public function collect()
     {
