@@ -153,7 +153,7 @@
                         <label class="col-xs-2 t_r"><span class="red">*</span>校区后台登陆账号：</label>
                         <div class="col-xs-4">
                             <input type="text" class="form-control w240 zoom" placeholder="手机号" id="searchinput" value="{{isset($model->user) ? $model->user->mobile : ''}}">
-                            <input type="hidden" id="adminid" name="admin[userid]" value="{{$model->user_id ?? 0}}">
+                            <input type="hidden" id="adminid" name="admin[userid]" value="{{$model->user_id ?? ''}}">
                             <a class="btn" id="seachuser">验证账号</a>
                         </div>
                     </div>

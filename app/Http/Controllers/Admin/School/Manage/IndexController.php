@@ -91,6 +91,11 @@ class IndexController extends InitController
             return $this->error($validator->errors()->first(), null, true);
         }
 
+        if(!$admin['userid']){
+            return $this->error('请填写正确验证的手机号');
+        }
+
+
         try {
 
             //管理员逻辑
