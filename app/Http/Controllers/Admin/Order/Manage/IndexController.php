@@ -25,6 +25,7 @@ class IndexController extends InitController
 
         $name = $request->name ?? '';
         $lists = OrdOrder::where(function ($query)use($name){
+            $query->where('status',5);
             $name && $query->where('mobile',$name)->orWhere('serial',$name)->orWhere('goods_name','like',"%{$name}%");
         })->orderBy('id','DESC')->paginate(self::PAGESIZE);
 

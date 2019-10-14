@@ -45,7 +45,7 @@
                                     <td>{{$lv['category']['name'] ?? ''}}</td>
                                     <td>{{$lv['name'] ?? ''}}</td>
                                     <td>{{$lv['intro'] ?? ''}}</td>
-                                    <td>{{$lv['price'] ?? ''}}</td>
+                                    <td>{{$lv['price']/100 ?? ''}}</td>
                                     <td>{{$lv['sorts'] ?? ''}}</td>
                                     <td>
                                         <a href="{!! url('product/manage/goods/create',['id'=>$lv['id']]) !!}">编辑</a>

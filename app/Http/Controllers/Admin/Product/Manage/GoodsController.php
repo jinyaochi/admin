@@ -64,6 +64,7 @@ class GoodsController extends InitController
         try {
             $data['intro'] || $data['intro'] = '';
             $data['sorts'] || $data['sorts'] = 0;
+            $data['price'] && $data['price'] = $data['price']*100;
             GdsGood::saveBy($data);
             return $this->success('操作成功',url('product/manage/goods'));
         }catch (\Exception $e) {

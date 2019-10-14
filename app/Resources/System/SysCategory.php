@@ -8,6 +8,7 @@
 
 namespace App\Resources\System;
 
+use App\Models\Ord\OrdOrder;
 use App\Resources\Base;
 use App\Resources\Gds\GdsGood;
 
@@ -26,6 +27,7 @@ class SysCategory extends Base
      */
     public function toArray($request)
     {
+        $_this = $this;
         return [
             'id' => $this->id ?? 0,
             'name' => $this->name ?? '',
@@ -35,7 +37,10 @@ class SysCategory extends Base
             'goods' => $this->when($this->hasGoods,function (){
                 return GdsGood::collection($this->goods);
             }),
-            'price' => $this->goods()->where('pay',1)->sum('price')/100
+            'price' => $this->goods()->where('pay',1)->sum('price')/100,
+            'hasbuy' => OrdOrder::where('user_id',\Auth::guard(config('app.guard.api'))->user()->id ?? 0)->where('status',5)->whereHas('items',function ($query)use($_this){
+                $query->where('category_id',$_this['id']);
+            })->count()
         ];
     }
 }

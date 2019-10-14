@@ -67,7 +67,7 @@ class MainController extends InitController
             $app->setParameter('method','mbupay.wxpay.jsapi');
             $app->setParameter('body','能动视频');
             $app->setParameter('out_trade_no',$serial);
-            $app->setParameter('total_fee',1);
+            $app->setParameter('total_fee',$price);
             $app->setParameter('openid',$user['openid'] ?? 'oVem45adOxAnAbV52iAzd-fvaPmM');
             $app->setParameter('notify_url',env('APP_URL').'/notify');
             $app->setParameter('is_minipg',1);

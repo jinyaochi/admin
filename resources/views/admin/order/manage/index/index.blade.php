@@ -47,7 +47,7 @@
                                     <td>{{$lv['created_at'] ?? ' -- '}}</td>
                                     <td>{{$lv['status'] == 5?'付款成功':($lv['status'] == 1 ? '待付款': '已取消')}}</td>
                                     <td>{{$lv['pay_type'] == 1?'微信支付':'积分支付'}}</td>
-                                    <td>{{$lv['price'] ?? ' -- '}}</td>
+                                    <td>{{$lv['price']/100 ?? ' -- '}}</td>
                                     <td>{{$lv['name'] ?? ' -- '}}</td>
                                     <td>{{$lv['mobile'] ?? ' -- '}}</td>
                                 </tr>
