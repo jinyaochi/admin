@@ -21,6 +21,16 @@ class WorkerController extends InitController
         $this->template = 'admin.school.manage.worker.';
     }
 
+    public function workeremove(Request $request,User $model = null){
+        if($model['type'] & User::USER_TYPE_STAFF){
+            $model->type -= User::USER_TYPE_STAFF;
+            $model->schoole_id = 0;
+            $model->save();
+        }
+        return $this->success('success');
+
+    }
+
     public function workerlist(Request $request){
         $schoolid = $request->schoolid ?? '';
 

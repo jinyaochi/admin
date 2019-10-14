@@ -96,6 +96,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
                 Route::any('worker/{model}', ['as' => 'index.worker', 'uses' => 'WorkerController@index']);
                 Route::any('workerlist', ['as' => 'index.worker', 'uses' => 'WorkerController@workerlist']);
                 Route::any('worker/{model}/create', ['as' => 'index.worker.create', 'uses' => 'WorkerController@create']);
+                Route::any('workeremove/{model}', ['as' => 'index.worker.create', 'uses' => 'WorkerController@workeremove']);
             });
 
         });
