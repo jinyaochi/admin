@@ -107,6 +107,10 @@ class IndexController extends InitController
                     $adminInfo->type += User::USER_TYPE_TENANT;
                 }
 
+                if(!($adminInfo['type'] & User::USER_TYPE_STAFF)){
+                    $adminInfo->type += User::USER_TYPE_STAFF;
+                }
+
                 $admin['pwd'] != '******' && $adminInfo->password = \Hash::make($admin['pwd']);
                 $adminInfo->schoole_id = $model['id'];
                 $adminInfo->save();
