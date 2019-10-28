@@ -60,8 +60,11 @@
                                     <td>{{$lv->school->name ?? '未分配'}}</td>
                                     <td>{{$lv['created_at'] ?? ' -- '}}</td>
                                     <td>
-                                        <a class="red" style="position: relative; display: inline-block; width: 50px; text-align: center;">
-                                            分配
+                                        @if($lv['school_id'])
+                                            <a style="display: inline-block;" class="green w80">已分配</a>
+                                        @else
+                                        <a class="red" style="position: relative; display: inline-block; width: 80px;">
+                                            分配&nbsp;&nbsp;
                                             <ul style=" line-height: 30px; position: absolute; left: -200px; top: 0; width: 199px; background: #eeeeee;">
                                                 @foreach($school as $s)
                                                     <li class="do_action" data-confirm="确定分配到{{$s['name']}}？" data-url="{!! url('member/manage/message/change',['id'=>$lv['id']]) !!}?sid={{$s['id']}}">
@@ -70,7 +73,8 @@
                                                 @endforeach
                                             </ul>
                                         </a>
-                                        <a class="do_action" data-confirm="确定要删除吗？" data-url="{!! url('member/manage/message/remove',['id'=>$lv['id']]) !!}">删除</a>
+                                            @endif
+                                            <a class="do_action" data-confirm="确定要删除吗？" data-url="{!! url('member/manage/message/remove',['id'=>$lv['id']]) !!}">删除</a>
                                     </td>
                                 </tr>
                             @empty

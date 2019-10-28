@@ -342,6 +342,8 @@ class MainController extends InitController
      */
     public function appoint(Request $request,$type = 1){
 
+        $user = \Auth::user();
+
         $data = [
             'name' => $request->name ?? '',
             'mobile' => $request->mobile ?? '',
@@ -391,6 +393,7 @@ class MainController extends InitController
             'mobile' => $data['mobile'],
             'school_id' => $request->sid ?? 0,
             'content' => $data['content'],
+            'user_id' => $user['id'] ?? 0,
         ]);
 
         return $this->success('提交成功');
