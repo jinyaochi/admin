@@ -20,7 +20,9 @@
                         </div>
                         <input type="submit" value="搜索" class="fl btn ml10 js_submit">
                     </form>
+                    @if(!$adminSchoolId)
                     <a class="btn btn_r" href="{{ url('school/manage/index/create') }}">+ 添加校区</a>
+                        @endif
                 </div>
                 <!--tab 切换1 bengin-->
                 <div class="form-horizontal goods_nav_search clearfix">

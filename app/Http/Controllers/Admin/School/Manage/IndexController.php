@@ -33,7 +33,7 @@ class IndexController extends InitController
             $adminSchoolId && $query->where('id',$adminSchoolId);
         })->orderBy('id','DESC')->paginate(self::PAGESIZE);
 
-        return view( $this->template. __FUNCTION__,compact('lists'));
+        return view( $this->template. __FUNCTION__,compact('lists','adminSchoolId'));
 
     }
 
