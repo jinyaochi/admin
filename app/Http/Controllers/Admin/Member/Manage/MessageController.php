@@ -36,7 +36,7 @@ class MessageController extends InitController
         })->orderBy('id','DESC')->paginate(self::PAGESIZE);
         $school = School::all();
 
-        return view( $this->template. __FUNCTION__,compact('lists','school'));
+        return view( $this->template. __FUNCTION__,compact('lists','school','adminSchoolId'));
     }
 
     public function remove(Request $request,Appoint $model = null){

@@ -101,6 +101,8 @@ class IndexController extends InitController
             //管理员逻辑
             $adminInfo = User::where('id','!=',env('SUPER_ID'))->find($admin['userid']);
 
+            $model = School::saveBy($data);
+
             if($adminInfo){
 
                 if(!($adminInfo['type'] & User::USER_TYPE_TENANT)){
@@ -112,16 +114,18 @@ class IndexController extends InitController
                 }
 
                 $admin['pwd'] != '******' && $adminInfo->password = \Hash::make($admin['pwd']);
-                $adminInfo->schoole_id = $model['id'];
+                $adminInfo->schoole_id = $model['id'] ?? 0;
                 $adminInfo->save();
 
                 $adminInfo->assignRole(['school']);
             }
 
-            $data['user_id'] = $admin['userid'];
+            if($adminInfo){
+                $model->user_id = $adminInfo['id'] ?? 0;
+                $model->save();
+            }
 
             //保存校区
-            School::saveBy($data);
 
             return $this->success('操作成功',url('school/manage/index'));
         }catch (\Exception $e) {

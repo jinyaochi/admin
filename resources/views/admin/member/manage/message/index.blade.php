@@ -43,9 +43,10 @@
                             <tr>
                                 <th style="width: 8%">ID</th>
                                 <th style="width: 15%">电话</th>
-                                <th style="width: 15%">姓名</th>
-                                <th style="width: 15%">年级</th>
+                                <th style="width: 10%">姓名</th>
+                                <th style="width: 10%">年级</th>
                                 <th style="width: 15%">所属校区</th>
+                                <th style="width: 10%">业务员</th>
                                 <th style="width: 15%">申请时间</th>
                                 <th>操作</th>
                             </tr>
@@ -58,8 +59,10 @@
                                     <td>{{$lv['name'] ?? ' -- '}}</td>
                                     <td>{{$lv['content'] ?? ' -- '}}</td>
                                     <td>{{$lv->school->name ?? '未分配'}}</td>
+                                    <td>{{$lv->user->member->name ?? $lv->user->member->mobile ?? ' -- '}}</td>
                                     <td>{{$lv['created_at'] ?? ' -- '}}</td>
                                     <td>
+                                        @if(!$adminSchoolId)
                                         @if($lv['school_id'])
                                             <a style="display: inline-block;" class="green w80">已分配</a>
                                         @else
@@ -73,6 +76,7 @@
                                                 @endforeach
                                             </ul>
                                         </a>
+                                            @endif
                                             @endif
                                             <a class="do_action" data-confirm="确定要删除吗？" data-url="{!! url('member/manage/message/remove',['id'=>$lv['id']]) !!}">删除</a>
                                     </td>

@@ -150,16 +150,17 @@
                     </div>
 
                     <div class="form-group category-msg-l1">
-                        <label class="col-xs-2 t_r"><span class="red">*</span>校区后台登陆账号：</label>
+                        <label class="col-xs-2 t_r"><span class="red">*</span>校长登录手机号：</label>
                         <div class="col-xs-4">
                             <input type="text" class="form-control w240 zoom" placeholder="手机号" id="searchinput" value="{{isset($model->user) ? $model->user->mobile : ''}}">
                             <input type="hidden" id="adminid" name="admin[userid]" value="{{$model->user_id ?? ''}}">
-                            <a class="btn" id="seachuser">验证账号</a>
+                            <a class="btn" id="seachuser">验证账号</a><br />
+                            <span class="red">该手机号必须为小程序注册账号</span>
                         </div>
                     </div>
 
                     <div class="form-group category-msg-l1">
-                        <label class="col-xs-2 t_r"><span class="red">*</span>校区后台登陆密码：</label>
+                        <label class="col-xs-2 t_r"><span class="red">*</span>校长登录密码：</label>
                         <div class="col-xs-4">
                             <input type="text" class="form-control" placeholder="1-32个字符" name="admin[pwd]" maxlength="32" value="{{(isset($model->user) && $model->user->password) ? '******' : ''}}">
                         </div>

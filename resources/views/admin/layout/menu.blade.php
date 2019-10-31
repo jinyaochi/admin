@@ -7,7 +7,7 @@
     <li class="li-left sixty"><a href=""> <i class="iconfont">&#xe640;</i></a></li>
     <li class="li-left sixty"><a href="#"> <i class="iconfont">&#xe604;</i></a></li>
     <li class="li-right hundred-three">
-        {{$user['name'] ?? ' -- '}}<sup></sup>
+        {{$user['name'] ?? $user['mobile'] ?? ' -- '}}<sup></sup>
         <div class="account-information" style="bottom: -34px;">
             <a href="{{url('logout')}}">退出</a>
         </div>
