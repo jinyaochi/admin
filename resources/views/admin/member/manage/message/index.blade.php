@@ -11,6 +11,7 @@
             <!--right bengin-->
             <ul class="nav_pills mb10 clearfix">
                 <a><li class="selected">用户消息</li></a>
+                <a class="btn btn_r" href="{{ url('member/manage/message') }}?excel=1">+ 导出</a>
             </ul>
             <div class="mainbox">
                 <div class="form-horizontal goods_nav_search clearfix">

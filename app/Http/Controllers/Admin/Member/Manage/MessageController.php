@@ -13,6 +13,7 @@ use App\Models\School;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\InitController;
+use Excel;
 
 class MessageController extends InitController
 {
@@ -28,13 +29,29 @@ class MessageController extends InitController
 
         $adminSchoolId = \Auth::user()->schoole_id ?? 0;
 
-        $lists = Appoint::where('type',1)->where(function ($query)use($schoolid,$start,$end,$adminSchoolId){
-            $schoolid && $query->where('school_id',$schoolid);
-            $start && $query->where('created_at','>',$start);
-            $end && $query->where('created_at','<',$end);
-            $adminSchoolId && $query->where('school_id',$adminSchoolId);
-        })->orderBy('id','DESC')->paginate(self::PAGESIZE);
-        $school = School::all();
+
+
+        if($request->excel){
+            $lists = Appoint::where('type',1)->where(function ($query)use($schoolid,$start,$end,$adminSchoolId){
+                $schoolid && $query->where('school_id',$schoolid);
+                $start && $query->where('created_at','>',$start);
+                $end && $query->where('created_at','<',$end);
+                $adminSchoolId && $query->where('school_id',$adminSchoolId);
+            })->orderBy('id','DESC')->get();
+
+            self::export($lists);
+        }else{
+
+            $lists = Appoint::where('type',1)->where(function ($query)use($schoolid,$start,$end,$adminSchoolId){
+                $schoolid && $query->where('school_id',$schoolid);
+                $start && $query->where('created_at','>',$start);
+                $end && $query->where('created_at','<',$end);
+                $adminSchoolId && $query->where('school_id',$adminSchoolId);
+            })->orderBy('id','DESC')->paginate(self::PAGESIZE);
+
+            $school = School::all();
+
+        }
 
         return view( $this->template. __FUNCTION__,compact('lists','school','adminSchoolId'));
     }
@@ -57,4 +74,25 @@ class MessageController extends InitController
 
     }
 
+    public static function export($cellData){
+        ini_set('memory_limit','500M');
+        set_time_limit(0);//设置超时限制为0分钟
+
+        Excel::create('下载',function($excel) use ($cellData){
+            $excel->sheet('detail', function($sheet) use ($cellData){
+                $sheet->rows($cellData->map(function ($item){
+                    return [
+                        $item['id'] ?? '',
+                        $item['mobile'] ?? '',
+                        $item['name'] ?? '',
+                        $item['content'] ?? '',
+                        $item->school->name ?? '未分配',
+                        $item->user->member->name ?? $item->user->member->mobile ?? ' -- ',
+                        $item['created_at'] ?? '',
+                    ];
+                }));
+            });
+        })->export('xls');
+        die;
+    }
 }

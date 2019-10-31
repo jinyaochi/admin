@@ -71,7 +71,7 @@
                                     <td>{{$lv['nickname'] ?? ' -- '}}</td>
                                     <td>{{$lv['created_at'] ?? ' -- '}}</td>
                                     <td>{{$lv->member->school->name ?? ' -- '}}</td>
-                                    <td>{{$lv->member->name ?? ' -- '}}</td>
+                                    <td>{{$lv->member->name ?? $lv->member->mobile ?? ' -- '}}</td>
                                     <td>
                                         @if($lv['status'] != \App\Models\User::USER_STATUS_STOP)
                                             <a class="do_action" data-confirm="确定要冻结吗？" data-url="{!! url('member/manage/user/close',['user'=>$lv['id']]) !!}">冻结</a>

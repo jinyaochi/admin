@@ -39,15 +39,12 @@ class UserController extends InitController
         $adminSchoolId && $lists = $lists->whereHas('member',function ($query)use($adminSchoolId){
             $query->where('schoole_id',$adminSchoolId);
         });
-        $lists = $lists->paginate(self::PAGESIZE);
 
         if($request->excel){
-            $lists = User::select('nickname','email','created_at','integral','avatar','type')->where('type',User::USER_TYPE_MEMBER)->where(function ($query)use($name){
-                $name && $query->where('email',$name)->orWhere('nickname','like',"%{$name}%");
-            })->whereIn('status',[User::USER_STATUS_OPEN,User::USER_STATUS_STOP])->orderBy('id','DESC')->get();
-
+            $lists = $lists->get();
             self::export($lists);
         }else{
+            $lists = $lists->paginate(self::PAGESIZE);
             //校区
             $school = School::all();
             $worker = $schoolid ? User::where([
@@ -81,7 +78,16 @@ class UserController extends InitController
 
         Excel::create('下载',function($excel) use ($cellData){
             $excel->sheet('detail', function($sheet) use ($cellData){
-                $sheet->rows($cellData->toArray());
+                $sheet->rows($cellData->map(function ($item){
+                    return [
+                        $item['id'] ?? '',
+                        $item['mobile'] ?? '',
+                        $item['nickname'] ?? '',
+                        $item['created_at'] ?? '',
+                        $item->member->school['name'] ?? '',
+                        $item->member['name'] ?? $item->member['mobile'] ?? '',
+                    ];
+                }));
             });
         })->export('xls');
         die;
