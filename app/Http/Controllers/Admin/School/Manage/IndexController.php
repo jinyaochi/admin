@@ -55,6 +55,8 @@ class IndexController extends InitController
             'city' => 'required',
             'region' => 'required',
             'location' => 'required',
+            'images' => 'required',
+            'images2' => 'required',
             'lat' => 'required',
             'lng' => 'required',
         ];
@@ -65,6 +67,8 @@ class IndexController extends InitController
             'province.required' => '请选择省',
             'city.required' => '请选择市',
             'region.required' => '请选择区',
+            'images.required' => '请选择列表图',
+            'images2.required' => '请选择展示图',
             'location.required' => '请填写详细地址',
             'lat.required' => '缺少经纬度',
             'lng.required' => '缺少经纬度',
