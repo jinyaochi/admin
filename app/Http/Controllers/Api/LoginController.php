@@ -135,10 +135,10 @@ class LoginController extends InitController{
                 ->host('dysmsapi.aliyuncs.com')
                 ->options([
                     'query' => [
-                        'RegionId' => "cn-hangzhou",
+                        'RegionId' => env('SMSREGINID',''),
                         'PhoneNumbers' => $data['mobile'],
-                        'SignName' => "TinyUse微用",
-                        'TemplateCode' => "SMS_68070321",
+                        'SignName' => env('SMSSIGNNAME',''),
+                        'TemplateCode' => env('SMSTEMPLATECODE',''),
                         'TemplateParam' => '{"code":"'.$data['code'].'"}',
                     ],
                 ])->request();
