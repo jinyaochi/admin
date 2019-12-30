@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 
 
 
+Route::post('check', function (){return 1;});
 Route::post('mobile/login', 'LoginController@mobile');
 Route::post('wx/login', 'LoginController@wx');
 Route::post('refresh', 'LoginController@refresh');
