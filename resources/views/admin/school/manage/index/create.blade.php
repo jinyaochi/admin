@@ -53,7 +53,7 @@
                                         @endforeach
                                     @endif
                                 </li>
-                                <li @if(count($model['images']) >= 10) hidden @endif class="image-upload-add" data-num="10" data-box="image_box" data-item='<span class="self-add-img"><img src=""><input type="hidden" name="data[images][]" value=""><span hidden="" class="img-delete"><i class="icon-shanchu iconfont"></i></span></span>'>
+                                <li @if($model && count($model['images']) >= 10) hidden @endif class="image-upload-add" data-num="10" data-box="image_box" data-item='<span class="self-add-img"><img src=""><input type="hidden" name="data[images][]" value=""><span hidden="" class="img-delete"><i class="icon-shanchu iconfont"></i></span></span>'>
                                     <a class="tra_photofile">上传图片</a>
                                 </li>
                             </ul>
@@ -77,7 +77,7 @@
                                         @endforeach
                                     @endif
                                 </li>
-                                <li @if(count($model['images2']) >= 10) hidden @endif class="image-upload-add" data-num="10" data-box="image_box222" data-item='<span class="self-add-img"><img src=""><input type="hidden" name="data[images2][]" value=""><span hidden="" class="img-delete"><i class="icon-shanchu iconfont"></i></span></span>'>
+                                <li @if($model && count($model['images2']) >= 10) hidden @endif class="image-upload-add" data-num="10" data-box="image_box222" data-item='<span class="self-add-img"><img src=""><input type="hidden" name="data[images2][]" value=""><span hidden="" class="img-delete"><i class="icon-shanchu iconfont"></i></span></span>'>
                                     <a class="tra_photofile">上传图片</a>
                                 </li>
                             </ul>

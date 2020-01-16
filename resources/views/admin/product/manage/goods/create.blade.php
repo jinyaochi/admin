@@ -86,7 +86,7 @@
                     <div class="form-group category-msg-l1">
                         <label class="col-xs-2 t_r"><span class="red">*</span>价格：</label>
                         <div class="col-xs-4">
-                        <input type="number" min="0" max="100000000" step="0.01" class="form-control" placeholder="单位元" name="data[price]" value="{{$model->price/100 ?? ''}}">
+                        <input type="number" min="0" max="100000000" step="0.01" class="form-control" placeholder="单位元" name="data[price]" value="{{$model ? $model->price/100 : ''}}">
                         </div>
                     </div>
 
